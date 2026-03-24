@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum &amp; Delta Education</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+        body { font-family: 'Inter', sans-serif; }
+
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes scaleUp {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .animate-fade-up { animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; opacity: 0; }
+        .animate-scale-up { animation: scaleUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+
+        .split-panel { transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+        @media (min-width: 768px) {
+            .split-container:hover .split-panel { flex: 0.8; }
+            .split-container .split-panel:hover { flex: 1.2; }
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 antialiased selection:bg-blue-200 selection:text-blue-900 overflow-x-hidden transition-colors duration-700" id="body-main">
+
+    <!-- ========================================== -->
+    <!-- SPLIT SCREEN LANDING                       -->
+    <!-- ========================================== -->
+    <div id="landing-view" class="fixed inset-0 z-[100] flex flex-col md:flex-row bg-white transition-opacity duration-700 split-container">
+        
+        <!-- Left: Quantum School -->
+        <div onclick="enterApp('school')" class="split-panel flex-1 relative overflow-hidden group cursor-pointer border-b md:border-b-0 md:border-r border-gray-200/50 flex flex-col justify-center items-center p-8 bg-gradient-to-br from-blue-50/50 to-white">
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-5 mix-blend-multiply group-hover:scale-105 transition-transform duration-1000 ease-out"></div>
+            <div class="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/5 transition-colors duration-700"></div>
+            
+            <div class="relative z-10 text-center flex flex-col items-center max-w-sm animate-fade-up">
+                <div class="w-12 h-12 rounded-xl bg-white border border-blue-100 shadow-sm flex items-center justify-center mb-6 group-hover:-translate-y-2 transition-transform duration-500">
+                    <span class="font-semibold text-xl tracking-tighter text-blue-900">Q.</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-semibold tracking-tighter text-gray-900 mb-3 group-hover:text-blue-900 transition-colors">Quantum World School</h2>
+                <p class="text-sm text-gray-500 mb-8 font-medium">Structured Learning. Strong Foundations.</p>
+                <button class="bg-white/80 backdrop-blur-sm border border-gray-200 text-gray-900 hover:bg-gray-900 hover:text-white hover:border-gray-900 text-sm font-medium px-6 py-2.5 rounded-full transition-all flex items-center gap-2 shadow-sm">
+                    Enter School
+                    <iconify-icon icon="solar:arrow-right-linear" stroke-width="1.5"></iconify-icon>
+                </button>
+            </div>
+        </div>
+
+        <!-- Right: Delta Coaching -->
+        <div onclick="enterApp('coaching')" class="split-panel flex-1 relative overflow-hidden group cursor-pointer flex flex-col justify-center items-center p-8 bg-slate-950">
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-20 mix-blend-overlay group-hover:scale-105 transition-transform duration-1000 ease-out grayscale"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-violet-500/20 blur-[100px] rounded-full group-hover:bg-violet-500/30 transition-colors duration-700"></div>
+            
+            <div class="relative z-10 text-center flex flex-col items-center max-w-sm animate-fade-up delay-100">
+                <div class="w-12 h-12 rounded-xl bg-slate-900 border border-white/10 shadow-lg shadow-violet-500/20 flex items-center justify-center mb-6 group-hover:-translate-y-2 transition-transform duration-500">
+                    <span class="font-semibold text-xl tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">D.</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-semibold tracking-tighter text-white mb-3">Delta Classes</h2>
+                <p class="text-sm text-gray-400 mb-8 font-medium">Crack Concepts. Score Higher.</p>
+                <button class="bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white hover:text-slate-950 text-sm font-medium px-6 py-2.5 rounded-full transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(139,92,246,0.15)] group-hover:shadow-[0_0_30px_rgba(139,92,246,0.3)]">
+                    Enter Coaching
+                    <iconify-icon icon="solar:arrow-right-linear" stroke-width="1.5"></iconify-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function enterApp(mode) {
+            const landingView = document.getElementById('landing-view');
+            landingView.style.opacity = '0';
+            setTimeout(() => {
+                if (mode === 'school') {
+                    window.location.href = 'school.html';
+                } else {
+                    window.location.href = 'coaching.html';
+                }
+            }, 700);
+        }
+        const supabase = supabase.createClient(
+  "YOUR_URL",
+  "YOUR_ANON_KEY"
+)
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+</body></html>

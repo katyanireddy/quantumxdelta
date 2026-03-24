@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quantum Admin</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- HEADER -->
+  <div class="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+    <h1 class="text-lg font-semibold text-blue-900">Quantum Admin</h1>
+    <span class="text-xs text-gray-500">Admissions Dashboard</span>
+  </div>
+
+  <div class="max-w-6xl mx-auto mt-8 px-4">
+
+    <!-- STATS -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+
+      <div class="bg-white p-4 rounded-xl border">
+        <p class="text-xs text-gray-500">Total Students</p>
+        <h2 id="total" class="text-xl font-semibold">0</h2>
+      </div>
+
+      <div class="bg-white p-4 rounded-xl border">
+        <p class="text-xs text-gray-500">Class IX</p>
+        <h2 id="class9" class="text-xl font-semibold">0</h2>
+      </div>
+
+      <div class="bg-white p-4 rounded-xl border">
+        <p class="text-xs text-gray-500">Primary</p>
+        <h2 id="primary" class="text-xl font-semibold">0</h2>
+      </div>
+
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="flex flex-col md:flex-row gap-3 mb-4">
+
+      <input id="search"
+        placeholder="Search student..."
+        class="flex-1 px-4 py-2 border rounded-lg text-sm" />
+
+      <select id="filter"
+        class="px-4 py-2 border rounded-lg text-sm">
+        <option value="">All Classes</option>
+        <option value="nursery">Nursery</option>
+        <option value="lkg">LKG</option>
+        <option value="ukg">UKG</option>
+        <option value="1">Class I</option>
+        <option value="5">Class V</option>
+        <option value="9">Class IX</option>
+      </select>
+
+    </div>
+
+    <!-- TABLE -->
+    <div class="bg-white rounded-2xl border overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="bg-gray-50 text-gray-500 text-xs uppercase">
+          <tr>
+            <th class="px-6 py-3 text-left">Student</th>
+            <th class="px-6 py-3">Phone</th>
+            <th class="px-6 py-3">Class</th>
+            <th class="px-6 py-3">Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="tableBody" class="divide-y"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+<script>
+const supabaseClient = supabase.createClient(
+  "https://hcbxtpayetbalhoymbqr.supabase.co",
+  "sb_publishable_2FfE6ybav2bpWAeelpLPyg_Xatiey50",
+)
+
+let allData = []
+
+async function loadData() {
+  const { data, error } = await supabaseClient
+    .from("admissions")
+    .select("*")
+
+  if (error) {
+    console.error(error)
+    return
+  }
+
+  allData = data
+  updateStats(data)
+  renderTable(data)
+}
+
+function updateStats(data) {
+  document.getElementById("total").innerText = data.length
+
+  const class9 = data.filter(d => d.course == "9").length
+  const primary = data.filter(d => d.course == "1" || d.course == "5").length
+
+  document.getElementById("class9").innerText = class9
+  document.getElementById("primary").innerText = primary
+}
+
+function renderTable(data) {
+  const table = document.getElementById("tableBody")
+  table.innerHTML = ""
+
+  data.reverse().forEach(item => {
+    table.innerHTML += `
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-4 font-medium">${item.student_name}</td>
+        <td class="px-6 py-4">${item.phone}</td>
+        <td class="px-6 py-4">
+          <span class="bg-blue-50 text-blue-700 px-2 py-1 rounded-full text-xs">
+            ${item.course}
+          </span>
+        </td>
+        <td class="px-6 py-4">
+          <button onclick="deleteStudent('${item.id}')"
+            class="text-red-500 text-xs hover:underline">
+            Delete
+          </button>
+        </td>
+      </tr>
+    `
+  })
+}
+
+async function deleteStudent(id) {
+  const confirmDelete = confirm("Delete this student?")
+  if (!confirmDelete) return
+
+  await supabaseClient
+    .from("admissions")
+    .delete()
+    .eq("id", id)
+
+  loadData()
+}
+
+document.getElementById("search").addEventListener("input", (e) => {
+  const value = e.target.value.toLowerCase()
+
+  const filtered = allData.filter(item =>
+    item.student_name.toLowerCase().includes(value)
+  )
+
+  renderTable(filtered)
+})
+
+document.getElementById("filter").addEventListener("change", (e) => {
+  const value = e.target.value
+
+  if (!value) return renderTable(allData)
+
+  const filtered = allData.filter(item => item.course == value)
+  renderTable(filtered)
+})
+
+loadData()
+</script>
+
+</body>
+</html>

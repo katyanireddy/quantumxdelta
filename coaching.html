@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delta Classes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+        body { font-family: 'Inter', sans-serif; }
+
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes scaleUp {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .animate-fade-up { animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; opacity: 0; }
+        .animate-scale-up { animation: scaleUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .custom-radio input:checked + div {
+            border-color: currentColor;
+            background-color: currentColor;
+        }
+        .custom-radio input:checked + div svg { opacity: 1; transform: scale(1); }
+    </style>
+</head>
+<body class="bg-slate-950 text-white antialiased selection:bg-violet-500/30 selection:text-violet-200 overflow-x-hidden transition-colors duration-700 dark" id="body-main">
+
+    <div id="app-main" class="min-h-screen flex flex-col relative">
+
+        <!-- Header / Nav -->
+        <nav id="main-nav" class="fixed top-0 inset-x-0 z-50 transition-colors duration-500 bg-slate-950/80 backdrop-blur-md border-b border-white/10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+
+                <div class="flex items-center gap-2 w-32 cursor-pointer" onclick="location.href='landing.html'">
+                    <span id="logo-text" class="font-semibold tracking-tighter text-xl text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400 transition-colors duration-500">Delta.</span>
+                </div>
+
+                <div class="absolute left-1/2 -translate-x-1/2 flex items-center p-1 rounded-full bg-slate-800 border border-white/10 shadow-inner transition-colors duration-500" id="nav-toggle-container">
+                    <div id="toggle-slider" class="absolute w-[calc(50%-4px)] h-[calc(100%-8px)] bg-slate-600 rounded-full shadow-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 top-1 left-1" style="transform: translateX(100%)"></div>
+
+                    <button onclick="location.href='school.html'" id="btn-school" class="relative z-10 px-4 sm:px-6 py-1.5 text-xs sm:text-sm font-medium text-gray-400 hover:text-gray-200 transition-colors duration-300 flex items-center gap-1.5 rounded-full">
+                        <iconify-icon icon="solar:diploma-linear" stroke-width="1.5" class="text-base hidden sm:block"></iconify-icon>
+                        School
+                    </button>
+                    <button onclick="location.href='coaching.html'" id="btn-coaching" class="relative z-10 px-4 sm:px-6 py-1.5 text-xs sm:text-sm font-medium text-white transition-colors duration-300 flex items-center gap-1.5 rounded-full">
+                        <iconify-icon icon="solar:rocket-linear" stroke-width="1.5" class="text-base hidden sm:block"></iconify-icon>
+                        Coaching
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-3 w-32 justify-end">
+                    <button onclick="openModal('login')" id="btn-login" class="hidden sm:block text-xs font-medium text-gray-400 hover:text-white transition-colors">Log in</button>
+                    <button onclick="openModal('demo')" id="btn-cta" class="bg-white text-slate-900 hover:bg-gray-200 text-xs font-medium px-4 py-2 rounded-full transition-all shadow-sm">
+                        Book Demo
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- COACHING MODE (DELTA) -->
+        <main id="coaching-view" class="flex-1 pt-16 bg-slate-950 text-white relative">
+
+            <div class="absolute inset-0 overflow-y-auto overflow-x-hidden pb-20" style="-ms-overflow-style: none; scrollbar-width: thin; scrollbar-color: #334155 transparent;">
+
+                <!-- Banner -->
+                <div class="bg-violet-900/30 border-b border-violet-500/20 px-4 py-2 text-center flex justify-center items-center gap-2 backdrop-blur-sm">
+                    <iconify-icon icon="solar:fire-square-linear" class="text-orange-400 text-sm"></iconify-icon>
+                    <p class="text-[11px] font-medium text-violet-200 tracking-wide uppercase">New Batches Start 19 Jan 2026</p>
+                </div>
+
+                <!-- Background Effects -->
+                <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-violet-600/10 blur-[120px] rounded-full pointer-events-none"></div>
+                <div class="absolute top-40 left-0 w-[300px] h-[300px] bg-fuchsia-600/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+                <!-- Hero -->
+                <section class="relative pt-24 pb-20 overflow-hidden flex flex-col items-center text-center px-6 z-10">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 mb-6">
+                        <span class="text-[10px] font-medium text-gray-300">Std. 4 to 12 (All Subjects)</span>
+                    </div>
+                    <h1 class="text-4xl md:text-6xl font-semibold tracking-tighter text-white leading-[1.1] max-w-3xl">
+                        No.1 Coaching for <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-orange-400">English Medium.</span>
+                    </h1>
+                    <p class="mt-5 text-sm md:text-base text-gray-400 max-w-xl font-normal leading-relaxed">
+                        Master concepts, clear doubts instantly, and achieve top ranks with our expert faculty and proven methodology.
+                    </p>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                        <button onclick="openModal('demo')" class="bg-white text-slate-950 hover:bg-gray-200 text-sm font-medium px-8 py-3 rounded-full transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] w-full sm:w-auto">Join Now</button>
+                        <button onclick="openModal('demo')" class="bg-transparent border border-white/20 text-white hover:bg-white/5 text-sm font-medium px-8 py-3 rounded-full transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
+                            <iconify-icon icon="solar:play-circle-linear" class="text-lg"></iconify-icon> Book Free Demo
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Courses Grid -->
+                <section class="py-20 border-t border-white/5 px-6 relative z-10">
+                    <div class="max-w-5xl mx-auto">
+                        <div class="flex flex-col md:flex-row justify-between items-end mb-10 gap-4">
+                            <div>
+                                <h2 class="text-2xl font-semibold tracking-tight text-white mb-2">Targeted Programs</h2>
+                                <p class="text-sm text-gray-400">Tailored batches for different academic stages.</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">CBSE Board</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-6 rounded-2xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.04] hover:border-violet-500/30 transition-all group cursor-pointer relative overflow-hidden">
+                                <div class="absolute top-0 right-0 w-24 h-24 bg-violet-500/10 blur-2xl group-hover:bg-violet-500/20 transition-all"></div>
+                                <div class="flex justify-between items-start mb-4">
+                                    <h3 class="text-lg font-medium text-white tracking-tight">Foundation Batch</h3>
+                                    <iconify-icon icon="solar:arrow-right-linear" class="text-gray-500 group-hover:text-white transition-colors"></iconify-icon>
+                                </div>
+                                <p class="text-xs text-violet-300 font-medium mb-2">Class 4 to 8</p>
+                                <p class="text-xs text-gray-400 leading-relaxed mb-4">Building strong analytical skills and basic conceptual clarity for future competitive exams.</p>
+                                <div class="flex gap-2">
+                                    <span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-300">Maths</span>
+                                    <span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-300">Science</span>
+                                    <span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-300">English</span>
+                                </div>
+                            </div>
+
+                            <div class="p-6 rounded-2xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.04] hover:border-fuchsia-500/30 transition-all group cursor-pointer relative overflow-hidden">
+                                <div class="absolute top-0 right-0 w-24 h-24 bg-fuchsia-500/10 blur-2xl group-hover:bg-fuchsia-500/20 transition-all"></div>
+                                <div class="flex justify-between items-start mb-4">
+                                    <h3 class="text-lg font-medium text-white tracking-tight">Board Target Batch</h3>
+                                    <iconify-icon icon="solar:arrow-right-linear" class="text-gray-500 group-hover:text-white transition-colors"></iconify-icon>
+                                </div>
+                                <p class="text-xs text-fuchsia-300 font-medium mb-2">Class 9 to 12</p>
+                                <p class="text-xs text-gray-400 leading-relaxed mb-4">Intensive preparation focused on board exam patterns, previous year questions, and high scores.</p>
+                                <div class="flex gap-2">
+                                    <span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-300">PCM/PCB</span>
+                                    <span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-300">Commerce</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Founder Section -->
+                <section class="py-20 px-6 relative z-10">
+                    <div class="max-w-3xl mx-auto rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.05] to-transparent p-8 md:p-12 text-center relative overflow-hidden">
+                        
+                        <img src="siddharth.jpeg" alt="Siddharth Prasad" class="w-50 h-50s object-cover rounded-lg mx-auto">
+                        <h3 class="text-2xl font-normal tracking-tight text-white mb-1">Er. Siddharth Sir</h3>
+                        <p class="text-sm text-gray-400 mb-6 uppercase tracking-widest">Founder &amp; Chief Mentor</p>
+                        <p class="text-base text-gray-300 leading-relaxed font-normal italic">"Education is not just about scoring marks, it's about cracking the concepts so clearly that the marks follow automatically. We build thinkers, not just learners."</p>
+                    </div>
+                </section>
+
+
+                <!-- Coaching Footer -->
+                <footer class="py-8 border-t border-white/10 text-center relative z-10">
+                    <p class="text-xs text-gray-500">© 2024 Delta Classes. All rights reserved.</p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODALS & OVERLAYS -->
+    <div id="modal-container" class="fixed inset-0 z-[200] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
+
+        <div id="modal-content" class="relative w-full max-w-md bg-slate-900 rounded-2xl shadow-2xl border border-white/10 overflow-hidden transform scale-95 opacity-0 transition-all duration-300 dark">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white z-10">
+                <iconify-icon icon="solar:close-circle-linear" class="text-xl"></iconify-icon>
+            </button>
+            <div id="modal-body" class="p-8"></div>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp -->
+    <a href="#" class="fixed bottom-6 right-6 z-[90] w-12 h-12 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+        <iconify-icon icon="solar:phone-calling-linear" class="text-2xl"></iconify-icon>
+    </a>
+
+    <script>
+        const modalContainer = document.getElementById('modal-container');
+        const modalContent = document.getElementById('modal-content');
+        const modalBody = document.getElementById('modal-body');
+
+        const modalTemplates = {
+            login: `
+                <div class="text-center mb-6">
+                    <h3 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Welcome back</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Enter your details to access your portal.</p>
+                </div>
+                <form class="space-y-4" onsubmit="event.preventDefault();">
+                    <div>
+                        <label class="block text-[11px] font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                        <input type="email" class="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-violet-500 transition-all" placeholder="name@example.com">
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="block text-[11px] font-medium text-gray-700 dark:text-gray-300">Password</label>
+                            <a href="#" class="text-[10px] text-blue-600 dark:text-violet-400 hover:underline">Forgot?</a>
+                        </div>
+                        <input type="password" class="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-violet-500 transition-all" placeholder="••••••••">
+                    </div>
+                    <button class="w-full bg-gray-900 dark:bg-white text-white dark:text-slate-900 text-sm font-medium py-2.5 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors mt-2">Sign In</button>
+                    <p class="text-center text-xs text-gray-500 dark:text-gray-400 mt-4">Don't have an account? <a href="#" onclick="openModal('signup')" class="text-gray-900 dark:text-white font-medium hover:underline">Sign up</a></p>
+                </form>
+            `,
+            signup: `
+                <div class="text-center mb-6">
+                    <h3 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Create Account</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Join our educational ecosystem.</p>
+                </div>
+                <form class="space-y-4" onsubmit="event.preventDefault();">
+                    <div class="grid grid-cols-2 gap-3 mb-2">
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="role" class="peer sr-only" checked>
+                            <div class="rounded-lg border border-gray-200 dark:border-white/10 px-3 py-2 text-center text-gray-500 dark:text-gray-400 peer-checked:bg-gray-900 peer-checked:text-white dark:peer-checked:bg-white dark:peer-checked:text-slate-900 transition-all">
+                                <span class="text-xs font-medium">Student</span>
+                            </div>
+                        </label>
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="role" class="peer sr-only">
+                            <div class="rounded-lg border border-gray-200 dark:border-white/10 px-3 py-2 text-center text-gray-500 dark:text-gray-400 peer-checked:bg-gray-900 peer-checked:text-white dark:peer-checked:bg-white dark:peer-checked:text-slate-900 transition-all">
+                                <span class="text-xs font-medium">Parent</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="text" class="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-violet-500 transition-all" placeholder="Full Name">
+                    </div>
+                    <div>
+                        <input type="email" class="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-violet-500 transition-all" placeholder="Email Address">
+                    </div>
+                    <div>
+                        <input type="password" class="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-violet-500 transition-all" placeholder="Create Password">
+                    </div>
+                    <button class="w-full bg-gray-900 dark:bg-white text-white dark:text-slate-900 text-sm font-medium py-2.5 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors mt-2">Create Account</button>
+                    <p class="text-center text-xs text-gray-500 dark:text-gray-400 mt-4">Already have an account? <a href="#" onclick="openModal('login')" class="text-gray-900 dark:text-white font-medium hover:underline">Log in</a></p>
+                </form>
+            `,
+            demo: `
+                <div class="text-center mb-6">
+                    <div class="w-10 h-10 rounded-full bg-violet-500/10 text-violet-400 border border-violet-500/20 flex items-center justify-center mx-auto mb-3"><iconify-icon icon="solar:video-frame-play-linear" class="text-lg"></iconify-icon></div>
+                    <h3 class="text-xl font-semibold tracking-tight text-white">Book Free Demo</h3>
+                    <p class="text-xs text-gray-400 mt-1">Delta Classes • Experience our methodology</p>
+                </div>
+                <form class="space-y-4" onsubmit="event.preventDefault();">
+                    <input type="text" class="w-full bg-slate-800 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-violet-500" placeholder="Your Name">
+                    <div class="grid grid-cols-2 gap-3">
+                        <select class="w-full bg-slate-800 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-400 focus:outline-none focus:ring-1 focus:ring-violet-500">
+                            <option value="" disabled selected>Class</option>
+                            <option value="8">Class 8</option>
+                            <option value="10">Class 10</option>
+                            <option value="12">Class 12 (Science)</option>
+                        </select>
+                        <input type="tel" class="w-full bg-slate-800 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-violet-500" placeholder="WhatsApp No.">
+                    </div>
+                    <button class="w-full bg-white text-slate-900 text-sm font-medium py-2.5 rounded-lg hover:bg-gray-200 transition-colors mt-2">Confirm Booking</button>
+                </form>
+            `
+        };
+
+        function openModal(type) {
+            modalBody.innerHTML = modalTemplates[type];
+            modalContainer.classList.remove('hidden');
+
+            if (type === 'demo') modalContent.className = "relative w-full max-w-md bg-slate-900 rounded-2xl shadow-2xl border border-white/10 overflow-hidden transform scale-95 opacity-0 transition-all duration-300 dark";
+            else modalContent.className = "relative w-full max-w-md bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-white/10 overflow-hidden transform scale-95 opacity-0 transition-all duration-300";
+
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modalContainer.classList.add('hidden');
+            }, 300);
+        }
+        const supabase = supabase.createClient(
+  "YOUR_URL",
+  "YOUR_ANON_KEY"
+)
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+</body></html>
