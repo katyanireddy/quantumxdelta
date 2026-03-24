@@ -383,7 +383,7 @@ async function sendMessage() {
   const userText = input.value.trim()
   if (!userText) return
 
-  // 🧑 User bubble
+  // user bubble
   messages.innerHTML += `
     <div class="flex justify-end">
       <div class="bg-blue-600 text-white px-3 py-2 rounded-lg max-w-[75%]">
@@ -394,44 +394,37 @@ async function sendMessage() {
 
   input.value = ""
 
-  // 🤖 typing indicator
   const typing = document.createElement("div")
-  typing.className = "text-gray-400 text-xs"
   typing.innerText = "AI is typing..."
+  typing.className = "text-gray-400 text-xs"
   messages.appendChild(typing)
 
-  messages.scrollTop = messages.scrollHeight
+  try {
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message: userText })
+    })
 
-  // fake delay (feels real)
-  setTimeout(() => {
+    const data = await res.json()
+
     typing.remove()
 
-    let reply = "Please contact the school for more details."
-
-    if (userText.toLowerCase().includes("fees")) {
-      reply = "Fees vary by class. Please fill the admission form for details."
-    } else if (userText.toLowerCase().includes("admission")) {
-      reply = "Admissions are open! Click on Apply Now 🚀"
-    } else if (userText.toLowerCase().includes("class")) {
-      reply = "We offer Nursery to Class X."
-    } else if (userText.toLowerCase().includes("location")) {
-      reply = "Our school is located in a prime accessible area."
-    }
-
-    // 🤖 AI bubble
     messages.innerHTML += `
       <div class="flex justify-start">
         <div class="bg-gray-100 text-gray-700 px-3 py-2 rounded-lg max-w-[75%]">
-          ${reply}
+          ${data.reply}
         </div>
       </div>
     `
 
-    messages.scrollTop = messages.scrollHeight
-  }, 800)
+  } catch (err) {
+    typing.remove()
+    messages.innerHTML += `<div class="text-red-500">Error getting response</div>`
+  }
 }
-
-    
 </script>
 
 
