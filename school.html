@@ -91,7 +91,29 @@
   background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
   color: white;
 }
+.whatsapp-float {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 55px;
+  height: 55px;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: white;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  text-decoration: none;
+  box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+  z-index: 999;
+  transition: 0.3s;
+}
 
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(37, 211, 102, 0.7);
+}
 </style>
     </style>
 </head>
@@ -301,51 +323,13 @@
     </div>
     
 
-    <!-- Floating WhatsApp -->
+        <!-- Floating WhatsApp -->
+    <a href="https://wa.me/917691833047?text=Hi%20Delta%20Classes%2C%20I%20want%20to%20enquire%20about%20admissions" 
+   class="whatsapp-float" 
+   target="_blank">
+   💬
+</a>
 
-    <button onclick="openChat()" class="fixed bottom-6 right-6 z-[90] w-12 h-12 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
-  <iconify-icon icon="solar:chat-round-dots-linear" class="text-2xl"></iconify-icon>
-</button>
-    <div id="chatbox" class="fixed bottom-20 right-6 w-80 bg-white/70 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200 hidden flex flex-col overflow-hidden transition-all duration-300">
-
-  <!-- Header -->
-  <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-3 flex justify-between items-center">
-    <div class="flex items-center gap-2">
-      <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-      <span class="text-sm font-medium">Quantum AI</span>
-    </div>
-    <button onclick="closeChat()" class="text-white text-sm">✕</button>
-  </div>
-
-  <!-- Messages -->
-  <div id="chatMessages" class="p-3 h-72 overflow-y-auto space-y-2 text-sm bg-white/40">
-    <div class="bg-gray-100 text-gray-700 px-3 py-2 rounded-lg w-fit">
-      Hi 👋 Ask me anything about admissions!
-    </div>
-  </div>
-
-  <!-- Input -->
-  <div class="flex items-center border-t bg-white/60">
-    <input id="chatInput" placeholder="Type a message..."
-      class="flex-1 px-3 py-3 text-sm outline-none bg-transparent" 
-      onkeypress="handleKey(event)" />
-    <button onclick="sendMessage()" class="px-4 text-blue-600 font-medium">
-      Send
-    </button>
-  </div>
-
-</div>
-<div id="tourPage" class="fixed inset-0 bg-black/90 hidden z-50 flex items-center justify-center">
-
-  <!-- CLOSE -->
-  <button onclick="closeTour()" class="absolute top-6 right-6 text-white text-2xl">✕</button>
-
-  <!-- CAROUSEL CONTAINER -->
-  <div id="carousel" class="flex items-center justify-center gap-6 w-full max-w-4xl">
-
-  </div>
-
-</div>
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script>
