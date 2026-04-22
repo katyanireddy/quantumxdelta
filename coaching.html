@@ -48,6 +48,45 @@
             background-color: currentColor;
         }
         .custom-radio input:checked + div svg { opacity: 1; transform: scale(1); }
+        .achieve-btn {
+  padding: 10px 18px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-size: 14px;
+  background: transparent;
+  border: 1px solid #a78bfa;
+  color: #a78bfa;
+  transition: 0.3s;
+}
+
+.achieve-btn:hover {
+  background: linear-gradient(90deg, #a78bfa, #ec4899);
+  color: white;
+  border: none;
+}
+.whatsapp-float {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 55px;
+  height: 55px;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: white;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  text-decoration: none;
+  box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+  z-index: 999;
+  transition: 0.3s;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(37, 211, 102, 0.7);
+}
     </style>
 </head>
 <body class="bg-slate-950 text-white antialiased selection:bg-violet-500/30 selection:text-violet-200 overflow-x-hidden transition-colors duration-700 dark" id="body-main">
@@ -76,7 +115,9 @@
                 </div>
 
                 <div class="flex items-center gap-3 w-32 justify-end">
-                    <button onclick="openModal('login')" id="btn-login" class="hidden sm:block text-xs font-medium text-gray-400 hover:text-white transition-colors">Log in</button>
+                    <button onclick="window.location.href='login.html'" id="btn-login" class="hidden sm:block text-xs font-medium text-gray-400 hover:text-white transition-colors">LogIn</button>
+                    <button onclick="window.location.href='achievements.html'" id="btn-login" class="achieve-btn">Achievements</button>
+
                     <button onclick="openModal('demo')" id="btn-cta" class="bg-white text-slate-900 hover:bg-gray-200 text-xs font-medium px-4 py-2 rounded-full transition-all shadow-sm">
                         Book Demo
                     </button>
@@ -112,7 +153,7 @@
                         Master concepts, clear doubts instantly, and achieve top ranks with our expert faculty and proven methodology.
                     </p>
                     <div class="mt-8 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                        <button onclick="openModal('demo')" class="bg-white text-slate-950 hover:bg-gray-200 text-sm font-medium px-8 py-3 rounded-full transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] w-full sm:w-auto">Join Now</button>
+                        <button onclick="window.location.href='coachingenrollment.html'" class="bg-white text-slate-950 hover:bg-gray-200 text-sm font-medium px-8 py-3 rounded-full transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] w-full sm:w-auto">Join Now</button>
                         <button onclick="openModal('demo')" class="bg-transparent border border-white/20 text-white hover:bg-white/5 text-sm font-medium px-8 py-3 rounded-full transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
                             <iconify-icon icon="solar:play-circle-linear" class="text-lg"></iconify-icon> Book Free Demo
                         </button>
@@ -198,9 +239,11 @@
     </div>
 
     <!-- Floating WhatsApp -->
-    <a href="#" class="fixed bottom-6 right-6 z-[90] w-12 h-12 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
-        <iconify-icon icon="solar:phone-calling-linear" class="text-2xl"></iconify-icon>
-    </a>
+    <a href="https://wa.me/917889618064?text=Hi%20Delta%20Classes%2C%20I%20want%20to%20enquire%20about%20admissions" 
+   class="whatsapp-float" 
+   target="_blank">
+   💬
+</a>
 
     <script>
         const modalContainer = document.getElementById('modal-container');
