@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login — Quantum & Delta Education</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Outfit',sans-serif;background:#050508;color:#fff;min-height:100vh;overflow-x:hidden}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* BG */
+.bg{position:fixed;inset:0;z-index:0}
+.bg-orb1{position:absolute;top:-100px;left:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(124,58,237,.2) 0%,transparent 70%);border-radius:50%}
+.bg-orb2{position:absolute;bottom:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(37,99,235,.15) 0%,transparent 70%);border-radius:50%}
+.bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:44px 44px}
+
+/* LAYOUT */
+.page{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{width:100%;max-width:440px;background:rgba(13,13,20,.85);border:1px solid rgba(139,92,246,.2);border-radius:24px;padding:44px 40px;backdrop-filter:blur(24px);box-shadow:0 32px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04) inset;animation:fadeUp .7s cubic-bezier(.16,1,.3,1) both}
+
+/* BRAND */
+.brand{text-align:center;margin-bottom:32px}
+.brand .logo-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:6px}
+.brand .q{width:36px;height:36px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;color:#1a3a6b;box-shadow:0 2px 12px rgba(255,255,255,.15)}
+.brand .d{width:36px;height:36px;border-radius:10px;background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:15px;font-weight:800;background:linear-gradient(135deg,#a78bfa,#f0abfc);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand .d-wrap{width:36px;height:36px;border-radius:10px;background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.3);display:flex;align-items:center;justify-content:center}
+.brand h1{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:-.3px;margin-bottom:4px}
+.brand p{font-size:12px;color:rgba(255,255,255,.35)}
+
+/* TABS */
+.tabs{display:flex;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:4px;margin-bottom:28px}
+.tab{flex:1;padding:9px;text-align:center;font-size:13px;font-weight:600;color:rgba(255,255,255,.4);border-radius:9px;cursor:pointer;transition:all .25s}
+.tab.active{background:rgba(124,58,237,.3);color:#fff;border:1px solid rgba(124,58,237,.4)}
+
+/* PORTAL SELECTOR */
+.portal-pick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+.pp{border-radius:12px;padding:14px;border:1.5px solid rgba(255,255,255,.08);cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.pp.school{background:rgba(26,58,107,.15)}
+.pp.coaching{background:rgba(124,58,237,.1)}
+.pp.active-school{border-color:#2563eb;background:rgba(37,99,235,.15);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+.pp.active-coaching{border-color:#7c3aed;background:rgba(124,58,237,.15);box-shadow:0 0 0 3px rgba(124,58,237,.15)}
+.pp .pt{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.pp.school .pt{color:#60a5fa}
+.pp.coaching .pt{color:#a78bfa}
+.pp p{font-size:11px;color:rgba(255,255,255,.35)}
+.pp .check{position:absolute;top:10px;right:10px;width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:9px;transition:all .25s}
+.pp.active-school .check,.pp.active-coaching .check{background:#22c55e;border-color:#22c55e;color:#fff}
+
+/* FORM */
+.label{display:block;font-size:11px;font-weight:600;color:rgba(255,255,255,.5);margin-bottom:6px;letter-spacing:.04em}
+.field{margin-bottom:16px;position:relative}
+.inp{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 14px;font-family:'Outfit',sans-serif;font-size:13px;color:#fff;outline:none;transition:all .2s}
+.inp::placeholder{color:rgba(255,255,255,.2)}
+.inp:focus{border-color:rgba(124,58,237,.6);background:rgba(124,58,237,.06);box-shadow:0 0 0 3px rgba(124,58,237,.12)}
+.inp-school:focus{border-color:rgba(37,99,235,.6);background:rgba(37,99,235,.06);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.field .eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.3);cursor:pointer;font-size:16px;transition:color .2s}
+.field .eye:hover{color:rgba(255,255,255,.6)}
+.forgot{font-size:11px;color:rgba(124,58,237,.8);float:right;margin-top:-4px;cursor:pointer;transition:color .2s}
+.forgot:hover{color:#a78bfa}
+.forgot-school{color:rgba(37,99,235,.8)}
+.forgot-school:hover{color:#60a5fa}
+
+/* SUBMIT */
+.submit{width:100%;padding:13px;border-radius:10px;border:none;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .3s;margin-top:4px;letter-spacing:.02em}
+.submit-coaching{background:linear-gradient(135deg,#7c3aed,#9333ea);color:#fff;box-shadow:0 4px 20px rgba(124,58,237,.45)}
+.submit-coaching:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.6)}
+.submit-school{background:linear-gradient(135deg,#1a3a6b,#2563eb);color:#fff;box-shadow:0 4px 20px rgba(37,99,235,.4)}
+.submit-school:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,99,235,.55)}
+.submit:disabled{opacity:.6;cursor:not-allowed;transform:none!important}
+
+/* DIVIDER */
+.or{display:flex;align-items:center;gap:12px;margin:20px 0;color:rgba(255,255,255,.2);font-size:11px;font-weight:500}
+.or::before,.or::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08)}
+
+/* BOTTOM */
+.bottom{text-align:center;margin-top:20px;font-size:12px;color:rgba(255,255,255,.35)}
+.bottom a{color:rgba(139,92,246,.8);font-weight:600;cursor:pointer;transition:color .2s}
+.bottom a:hover{color:#a78bfa}
+.bottom a.school-link{color:rgba(96,165,250,.8)}
+.bottom a.school-link:hover{color:#93c5fd}
+
+/* BACK */
+.back{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.3);font-size:12px;font-weight:500;margin-bottom:24px;cursor:pointer;transition:color .2s;text-decoration:none}
+.back:hover{color:rgba(255,255,255,.7)}
+
+/* SUCCESS */
+.success-msg{text-align:center;padding:20px 0;display:none}
+.success-msg .ico{font-size:52px;margin-bottom:12px;animation:float 3s ease-in-out infinite}
+.success-msg h3{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:6px}
+.success-msg p{font-size:13px;color:rgba(255,255,255,.45);line-height:1.7}
+</style>
+</head>
+<body>
+<div class="bg"><div class="bg-orb1"></div><div class="bg-orb2"></div><div class="bg-grid"></div></div>
+
+<div class="page">
+  <div class="card">
+    <a href="index.html" class="back">← Back to Home</a>
+
+    <!-- Brand -->
+    <div class="brand">
+      <div class="logo-row">
+        <div class="q">Q.</div>
+        <div class="d-wrap"><span style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;background:linear-gradient(135deg,#a78bfa,#f0abfc);-webkit-background-clip:text;background-clip:text;color:transparent">Δ</span></div>
+      </div>
+      <h1>Welcome Back</h1>
+      <p>Sign in to your student or parent portal</p>
+    </div>
+
+    <!-- Portal selector -->
+    <div class="portal-pick">
+      <div class="pp school active-school" onclick="selectPortal('school')" id="pp-school">
+        <div class="check" id="chk-school">✓</div>
+        <div class="pt">🏫 School</div>
+        <p>Quantum World School</p>
+      </div>
+      <div class="pp coaching" onclick="selectPortal('coaching')" id="pp-coaching">
+        <div class="check" id="chk-coaching"></div>
+        <div class="pt">⚡ Coaching</div>
+        <p>The Delta Classes</p>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div id="login-form">
+      <div class="field">
+        <label class="label">Email Address</label>
+        <input type="email" class="inp inp-school" id="email-inp" placeholder="name@example.com" required>
+      </div>
+      <div class="field">
+        <label class="label">Password <span class="forgot forgot-school" id="forgot-link" onclick="forgotPwd()">Forgot password?</span></label>
+        <input type="password" class="inp inp-school" id="pwd-inp" placeholder="••••••••" required>
+        <span class="eye" onclick="togglePwd()">👁</span>
+      </div>
+      <button class="submit submit-school" id="submit-btn" onclick="doLogin()">Sign In</button>
+
+      <div class="or">or continue with</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <button style="padding:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:9px;color:rgba(255,255,255,.6);font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px" onmouseover="this.style.background='rgba(255,255,255,.09)'" onmouseout="this.style.background='rgba(255,255,255,.05)'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Google
+        </button>
+        <button style="padding:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:9px;color:rgba(255,255,255,.6);font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px" onmouseover="this.style.background='rgba(255,255,255,.09)'" onmouseout="this.style.background='rgba(255,255,255,.05)'">
+          📱 Phone OTP
+        </button>
+      </div>
+    </div>
+
+    <!-- Success state -->
+    <div class="success-msg" id="success-msg">
+      <div class="ico">✅</div>
+      <h3>Login Successful!</h3>
+      <p>Redirecting to your portal dashboard...<br><br>
+        <a href="index.html" style="color:#a78bfa;text-decoration:none;font-weight:600">← Back to Home</a>
+      </p>
+    </div>
+
+    <div class="bottom" id="signup-link">
+      Don't have an account? <a onclick="location.href='signup.html'">Create account</a>
+    </div>
+  </div>
+</div>
+
+<script>
+let portal = 'school';
+
+function selectPortal(p) {
+  portal = p;
+  // School
+  document.getElementById('pp-school').className = 'pp school' + (p==='school' ? ' active-school' : '');
+  document.getElementById('chk-school').textContent = p==='school' ? '✓' : '';
+  // Coaching
+  document.getElementById('pp-coaching').className = 'pp coaching' + (p==='coaching' ? ' active-coaching' : '');
+  document.getElementById('chk-coaching').textContent = p==='coaching' ? '✓' : '';
+  // Style updates
+  const inputs = document.querySelectorAll('.inp');
+  inputs.forEach(i => {
+    i.classList.toggle('inp-school', p==='school');
+    i.classList.toggle('inp-coaching', p==='coaching');
+  });
+  const btn = document.getElementById('submit-btn');
+  btn.className = 'submit submit-' + p;
+  const forgot = document.getElementById('forgot-link');
+  forgot.className = 'forgot ' + (p==='school' ? 'forgot-school' : '');
+  const link = document.querySelector('.bottom a');
+  link.className = p==='school' ? 'school-link' : '';
+}
+
+function togglePwd() {
+  const i = document.getElementById('pwd-inp');
+  i.type = i.type === 'password' ? 'text' : 'password';
+}
+
+function forgotPwd() {
+  alert('A password reset link will be sent to your registered email or phone number.');
+}
+
+function doLogin() {
+  const email = document.getElementById('email-inp').value;
+  const pwd = document.getElementById('pwd-inp').value;
+  if(!email || !pwd) { alert('Please fill in all fields.'); return; }
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = 'Signing in...'; btn.disabled = true;
+  setTimeout(() => {
+    document.getElementById('login-form').style.display = 'none';
+    document.getElementById('signup-link').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'block';
+  }, 1400);
+}
+
+// Enter key
+document.addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+</script>
+</body>
+</html>
