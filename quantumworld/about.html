@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum World School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50 text-gray-900 antialiased selection:bg-blue-200 selection:text-blue-900 overflow-x-hidden transition-colors duration-700" id="body-main">
+
+    <div id="app-main" class="min-h-screen flex flex-col relative">
+
+        <!-- Header / Nav -->
+        <nav id="main-nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-500 bg-white/80 backdrop-blur-md border-b border-gray-200/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-2 w-32 cursor-pointer" onclick="window.location.href='index.html'">
+                    <span id="logo-text" class="font-semibold tracking-tighter text-xl text-blue-900 transition-colors duration-500">Quantum.</span>
+                </div>
+                
+                <!-- Toggle -->
+                <div class="absolute left-1/2 -translate-x-1/2 flex items-center p-1 rounded-full bg-gray-100 border border-gray-200 shadow-inner transition-colors duration-500" id="nav-toggle-container">
+                    <div id="toggle-slider" class="absolute w-[calc(50%-4px)] h-[calc(100%-8px)] bg-white rounded-full shadow-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 top-1 left-1" style="transform: translateX(0)"></div>
+                    
+                    <button onclick="" id="btn-school" class="relative z-10 px-4 sm:px-6 py-1.5 text-xs sm:text-sm font-medium text-gray-900 transition-colors duration-300 flex items-center gap-1.5 rounded-full">
+                        <iconify-icon icon="solar:diploma-linear" stroke-width="1.5" class="text-base hidden sm:block"></iconify-icon>
+                        School
+                    </button>
+                    <button onclick="window.location.href='coaching.html'" id="btn-coaching" class="relative z-10 px-4 sm:px-6 py-1.5 text-xs sm:text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors duration-300 flex items-center gap-1.5 rounded-full">
+                        <iconify-icon icon="solar:rocket-linear" stroke-width="1.5" class="text-base hidden sm:block"></iconify-icon>
+                        Coaching
+                    </button>
+                </div>
+
+
+                <!-- Auth Buttons -->
+                <div class="flex items-center gap-3 w-32 justify-end">
+                    
+                    <button onclick="window.location.href='signup.html'" class="bg-blue-600 text-white hover:bg-blue-700 text-xs font-medium px-4 py-2 rounded-full transition-all shadow-sm">
+                        Admission Open
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <nav class="page-nav">
+  <ul>
+    <li><a href="school.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="curriculum.html">Curriculum</a></li>
+    <li><a href="admissions.html">Admissions</a></li>
+    <li><a href="fees.html">Fee Structure</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="rules.html">Rules & Regulations</a></li>
+    <li><a href="contact.html">Contact Us</a></li>
+  </ul>
+</nav>
+
+<section class="relative py-24 overflow-hidden bg-gradient-to-b from-white to-blue-50">
+
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-400/10 blur-[120px] rounded-full"></div>
+
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="text-center mb-20">
+
+      <span class="px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm font-medium">
+        About Quantum World School
+      </span>
+
+      <h1 class="mt-6 text-5xl md:text-7xl font-bold tracking-tight text-gray-900">
+        Building Future
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+          Leaders
+        </span>
+      </h1>
+
+      <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600 leading-8">
+        At Quantum World School, we believe education goes beyond textbooks.
+        We nurture curiosity, creativity, leadership and character while
+        maintaining the highest standards of academic excellence.
+      </p>
+
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <div>
+        <img
+          src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200"
+          class="rounded-[30px] shadow-2xl"
+        >
+      </div>
+
+      <div>
+
+        <h2 class="text-4xl font-bold mb-6">
+          Why Parents Trust Us
+        </h2>
+
+        <div class="space-y-6">
+
+          <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h3 class="font-semibold text-lg mb-2">Academic Excellence</h3>
+            <p class="text-gray-600">
+              CBSE curriculum combined with modern teaching methodologies.
+            </p>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h3 class="font-semibold text-lg mb-2">Holistic Development</h3>
+            <p class="text-gray-600">
+              Equal focus on academics, sports, leadership and creativity.
+            </p>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h3 class="font-semibold text-lg mb-2">Modern Infrastructure</h3>
+            <p class="text-gray-600">
+              Smart classrooms, labs, library and activity spaces.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Stats -->
+
+    <div class="grid md:grid-cols-4 gap-6 mt-24">
+
+      <div class="bg-white rounded-3xl p-8 text-center shadow-sm">
+        <h3 class="text-4xl font-bold text-blue-600">1200+</h3>
+        <p class="text-gray-500 mt-2">Students</p>
+      </div>
+
+      <div class="bg-white rounded-3xl p-8 text-center shadow-sm">
+        <h3 class="text-4xl font-bold text-blue-600">50+</h3>
+        <p class="text-gray-500 mt-2">Faculty Members</p>
+      </div>
+
+      <div class="bg-white rounded-3xl p-8 text-center shadow-sm">
+        <h3 class="text-4xl font-bold text-blue-600">15+</h3>
+        <p class="text-gray-500 mt-2">Years Experience</p>
+      </div>
+
+      <div class="bg-white rounded-3xl p-8 text-center shadow-sm">
+        <h3 class="text-4xl font-bold text-blue-600">98%</h3>
+        <p class="text-gray-500 mt-2">Board Results</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="py-20 bg-white">
+
+  <div class="max-w-5xl mx-auto text-center">
+
+    <h2 class="text-4xl font-bold mb-12">
+      Our Leadership
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-12">
+
+      <div>
+        <img
+          src="../images/dinanath.jpeg"
+          class="w-40 h-40 rounded-full mx-auto object-cover mb-4"
+        >
+
+        <h3 class="text-xl font-semibold">
+          Dinanath Prasad
+        </h3>
+
+        <p class="text-gray-500">
+          Director
+        </p>
+      </div>
+
+      <div>
+        <img
+          src="../images/sahil.jpeg"
+          class="w-40 h-40 rounded-full mx-auto object-cover mb-4"
+        >
+
+        <h3 class="text-xl font-semibold">
+          Sahil Raj
+        </h3>
+
+        <p class="text-gray-500">
+          Principal
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+ <!-- School Footer -->
+            <footer class="py-8 bg-white border-t border-gray-200 text-center">
+                <p class="text-xs text-gray-400">© 2024 Quantum World School. All rights reserved.</p>
+            </footer>
+        </main>
+    </div>
