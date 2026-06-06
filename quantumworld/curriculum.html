@@ -1,26 +1,329 @@
-<section class="max-w-6xl mx-auto px-6 py-20">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum World School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50 text-gray-900 antialiased selection:bg-blue-200 selection:text-blue-900 overflow-x-hidden transition-colors duration-700" id="body-main">
 
-<h1 class="text-5xl font-bold mb-8">
-Curriculum
-</h1>
+    <div id="app-main" class="min-h-screen flex flex-col relative">
 
-<div class="grid md:grid-cols-3 gap-6">
+        <!-- Header / Nav -->
+        <nav id="main-nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-500 bg-white/80 backdrop-blur-md border-b border-gray-200/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+                  <!-- Mobile Menu Button -->
+ <button
+    id="menuBtn"
+    class="md:hidden text-xl text-gray-700 mr-2"
+    onclick="toggleSidebar()"
+  >
+    ☰
+  </button>
+                <!-- Logo -->
+                <div class="flex items-center gap-2 w-32 cursor-pointer" onclick="window.location.href='index.html'">
+                    <!-- Desktop -->
+<span class="hidden sm:block font-semibold tracking-tighter text-xl text-blue-900">
+  Quantum.
+</span>
 
-<div class="p-6 border rounded-xl">
-<h3>Pre Primary</h3>
-<p>Nursery to UKG</p>
+<!-- Mobile -->
+<span class="font-bold text-2xl text-blue-900">
+    Q
+  </span>
+                </div>
+                
+                <!-- Toggle -->
+                <div class="absolute left-1/2 -translate-x-1/2 flex items-center p-1 rounded-full bg-gray-100 border border-gray-200 shadow-inner transition-colors duration-500" id="nav-toggle-container">
+                    <div id="toggle-slider" class="absolute w-[calc(50%-4px)] h-[calc(100%-8px)] bg-white rounded-full shadow-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 top-1 left-1" style="transform: translateX(0)"></div>
+
+                    <button onclick="window.location.href='../quantumworld/school.html'" id="btn-school" class="relative z-10 px-4 sm:px-6 py-1.5 text-xs sm:text-sm font-medium text-gray-900 transition-colors duration-300 flex items-center gap-1.5 rounded-full">
+                        <iconify-icon icon="solar:diploma-linear" stroke-width="1.5" class="text-base hidden sm:block"></iconify-icon>
+                        School
+                    </button>
+                    <button onclick="window.location.href='../delta/coaching.html'" id="btn-coaching" class="relative z-10 px-4 sm:px-6 py-1.5 text-xs sm:text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors duration-300 flex items-center gap-1.5 rounded-full">
+                        <iconify-icon icon="solar:rocket-linear" stroke-width="1.5" class="text-base hidden sm:block"></iconify-icon>
+                        Coaching
+                    </button>
+                </div>
+
+
+                <!-- Auth Buttons -->
+                <div class="flex items-center gap-3 w-32 justify-end">
+                    
+                    <button
+  onclick="window.location.href='schooladmission.html'"
+  class="hidden sm:block bg-blue-600 text-white hover:bg-blue-700 text-xs font-medium px-4 py-2 rounded-full transition-all shadow-sm"
+>
+  Admission Open
+</button>
+                </div>
+            </div>
+        </nav>
+        <nav class="page-nav hidden md:block">
+  <ul>
+    <li><a href="school.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="curriculum.html">Curriculum</a></li>
+    <li><a href="admissions.html">Admissions</a></li>
+    <li><a href="fees.html">Fee Structure</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="rules.html">Rules & Regulations</a></li>
+    <li><a href="contact.html">Contact Us</a></li>
+  </ul>
+</nav>
+<!-- Mobile Sidebar -->
+<div
+  id="mobileSidebar"
+  class="fixed top-0 left-[-280px] w-[260px] h-screen bg-white shadow-2xl z-[999] transition-all duration-300 md:hidden"
+>
+  <div class="p-5 border-b flex justify-between items-center">
+    <h2 class="text-xl font-bold text-blue-900">Quantum</h2>
+
+    <button onclick="toggleSidebar()" class="text-2xl">
+      ×
+    </button>
+  </div>
+
+  <div class="flex flex-col p-4 space-y-4">
+
+    <a href="school.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="curriculum.html">Curriculum</a>
+    <a href="admissions.html">Admissions</a>
+    <a href="fees.html">Fee Structure</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="rules.html">Rules & Regulations</a>
+    <a href="contact.html">Contact Us</a>
+
+  </div>
 </div>
+<div
+  id="overlay"
+  class="hidden fixed inset-0 bg-black/40 z-[998] md:hidden"
+  onclick="toggleSidebar()"
+></div>
 
-<div class="p-6 border rounded-xl">
-<h3>Primary</h3>
-<p>Class I - V</p>
-</div>
+<section class="py-24 bg-gradient-to-b from-white to-blue-50">
 
-<div class="p-6 border rounded-xl">
-<h3>Secondary</h3>
-<p>Class VI - X</p>
-</div>
+  <div class="max-w-6xl mx-auto px-6 text-center">
 
-</div>
+    <span class="px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm">
+      Academic Curriculum
+    </span>
+
+    <h1 class="mt-6 text-6xl font-bold">
+      Learning Beyond
+      <span class="text-blue-600"> Textbooks</span>
+    </h1>
+
+    <p class="mt-5 text-gray-600 max-w-3xl mx-auto">
+      Our CBSE curriculum is designed to foster critical thinking,
+      creativity, communication skills and lifelong learning.
+    </p>
+
+  </div>
 
 </section>
+<section class="py-20 bg-white">
+
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <div class="p-8 rounded-[30px] border shadow-sm hover:shadow-xl transition">
+
+        <h3 class="text-2xl font-bold text-blue-600 mb-4">
+          Pre-Primary
+        </h3>
+
+        <p class="text-gray-600 mb-4">
+          Nursery to UKG
+        </p>
+
+        <ul class="space-y-2 text-gray-600">
+          <li>✓ Play-Based Learning</li>
+          <li>✓ Communication Skills</li>
+          <li>✓ Motor Skill Development</li>
+          <li>✓ Creative Activities</li>
+        </ul>
+
+      </div>
+
+      <div class="p-8 rounded-[30px] border shadow-sm hover:shadow-xl transition">
+
+        <h3 class="text-2xl font-bold text-blue-600 mb-4">
+          Primary
+        </h3>
+
+        <p class="text-gray-600 mb-4">
+          Class I - V
+        </p>
+
+        <ul class="space-y-2 text-gray-600">
+          <li>✓ Mathematics</li>
+          <li>✓ Science</li>
+          <li>✓ English</li>
+          <li>✓ Computer Education</li>
+        </ul>
+
+      </div>
+
+      <div class="p-8 rounded-[30px] border shadow-sm hover:shadow-xl transition">
+
+        <h3 class="text-2xl font-bold text-blue-600 mb-4">
+          Secondary
+        </h3>
+
+        <p class="text-gray-600 mb-4">
+          Class VI - X
+        </p>
+
+        <ul class="space-y-2 text-gray-600">
+          <li>✓ Advanced Science</li>
+          <li>✓ Mathematics</li>
+          <li>✓ Social Science</li>
+          <li>✓ Exam Preparation</li>
+        </ul>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="py-20 bg-gray-50">
+
+  <div class="max-w-6xl mx-auto px-6">
+
+    <h2 class="text-4xl font-bold text-center mb-12">
+      Core Subjects
+    </h2>
+
+    <div class="grid md:grid-cols-4 gap-6">
+
+      <div class="bg-white p-6 rounded-2xl text-center shadow-sm">
+        📚 English
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl text-center shadow-sm">
+        ➕ Mathematics
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl text-center shadow-sm">
+        🔬 Science
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl text-center shadow-sm">
+        🌎 Social Science
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl text-center shadow-sm">
+        💻 Computer Science
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl text-center shadow-sm">
+        🎨 Art & Craft
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl text-center shadow-sm">
+        🎵 Music
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl text-center shadow-sm">
+        ⚽ Physical Education
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="py-20 bg-white">
+
+  <div class="max-w-6xl mx-auto px-6">
+
+    <h2 class="text-4xl font-bold text-center mb-12">
+      Beyond Academics
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <div class="p-8 border rounded-[30px]">
+        <h3 class="text-xl font-semibold mb-4">
+          🏆 Sports
+        </h3>
+
+        <p class="text-gray-600">
+          Physical fitness, teamwork and leadership through sports.
+        </p>
+      </div>
+
+      <div class="p-8 border rounded-[30px]">
+        <h3 class="text-xl font-semibold mb-4">
+          🎭 Cultural Activities
+        </h3>
+
+        <p class="text-gray-600">
+          Dance, music, drama and annual celebrations.
+        </p>
+      </div>
+
+      <div class="p-8 border rounded-[30px]">
+        <h3 class="text-xl font-semibold mb-4">
+          💡 Innovation Labs
+        </h3>
+
+        <p class="text-gray-600">
+          STEM projects, experiments and creative learning.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="py-24">
+
+  <div class="max-w-5xl mx-auto px-6">
+
+    <div class="bg-blue-600 rounded-[40px] p-16 text-center">
+
+      <h2 class="text-5xl font-bold text-white">
+        Ready To Join Quantum World?
+      </h2>
+
+      <p class="text-blue-100 mt-4">
+        Admissions are open for the academic session 2026-27.
+      </p>
+
+      <a
+        href="admission-form.html"
+        class="inline-block mt-8 bg-white text-blue-600 px-8 py-3 rounded-full font-semibold"
+      >
+        Apply Now
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- School Footer -->
+            <footer class="py-8 bg-white border-t border-gray-200 text-center">
+                <p class="text-xs text-gray-400">© 2024 Quantum World School. All rights reserved.</p>
+            </footer>
+        </main>
+    </div>
+<script src="script.js"></script>
+
+</body></html>

@@ -15,21 +15,36 @@
         <!-- Header / Nav -->
         <nav id="main-nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-500 bg-white/80 backdrop-blur-md border-b border-gray-200/50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-                
+                  <!-- Mobile Menu Button -->
+ <button
+    id="menuBtn"
+    class="md:hidden text-xl text-gray-700 mr-2"
+    onclick="toggleSidebar()"
+  >
+    ☰
+  </button>
                 <!-- Logo -->
                 <div class="flex items-center gap-2 w-32 cursor-pointer" onclick="window.location.href='index.html'">
-                    <span id="logo-text" class="font-semibold tracking-tighter text-xl text-blue-900 transition-colors duration-500">Quantum.</span>
+                    <!-- Desktop -->
+<span class="hidden sm:block font-semibold tracking-tighter text-xl text-blue-900">
+  Quantum.
+</span>
+
+<!-- Mobile -->
+<span class="font-bold text-2xl text-blue-900">
+    Q
+  </span>
                 </div>
                 
                 <!-- Toggle -->
                 <div class="absolute left-1/2 -translate-x-1/2 flex items-center p-1 rounded-full bg-gray-100 border border-gray-200 shadow-inner transition-colors duration-500" id="nav-toggle-container">
                     <div id="toggle-slider" class="absolute w-[calc(50%-4px)] h-[calc(100%-8px)] bg-white rounded-full shadow-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 top-1 left-1" style="transform: translateX(0)"></div>
-                    
-                    <button onclick="" id="btn-school" class="relative z-10 px-4 sm:px-6 py-1.5 text-xs sm:text-sm font-medium text-gray-900 transition-colors duration-300 flex items-center gap-1.5 rounded-full">
+
+                    <button onclick="window.location.href='../quantumworld/school.html'" id="btn-school" class="relative z-10 px-4 sm:px-6 py-1.5 text-xs sm:text-sm font-medium text-gray-900 transition-colors duration-300 flex items-center gap-1.5 rounded-full">
                         <iconify-icon icon="solar:diploma-linear" stroke-width="1.5" class="text-base hidden sm:block"></iconify-icon>
                         School
                     </button>
-                    <button onclick="window.location.href='coaching.html'" id="btn-coaching" class="relative z-10 px-4 sm:px-6 py-1.5 text-xs sm:text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors duration-300 flex items-center gap-1.5 rounded-full">
+                    <button onclick="window.location.href='../delta/coaching.html'" id="btn-coaching" class="relative z-10 px-4 sm:px-6 py-1.5 text-xs sm:text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors duration-300 flex items-center gap-1.5 rounded-full">
                         <iconify-icon icon="solar:rocket-linear" stroke-width="1.5" class="text-base hidden sm:block"></iconify-icon>
                         Coaching
                     </button>
@@ -39,13 +54,16 @@
                 <!-- Auth Buttons -->
                 <div class="flex items-center gap-3 w-32 justify-end">
                     
-                    <button onclick="window.location.href='signup.html'" class="bg-blue-600 text-white hover:bg-blue-700 text-xs font-medium px-4 py-2 rounded-full transition-all shadow-sm">
-                        Admission Open
-                    </button>
+                    <button
+  onclick="window.location.href='schooladmission.html'"
+  class="hidden sm:block bg-blue-600 text-white hover:bg-blue-700 text-xs font-medium px-4 py-2 rounded-full transition-all shadow-sm"
+>
+  Admission Open
+</button>
                 </div>
             </div>
         </nav>
-        <nav class="page-nav">
+        <nav class="page-nav hidden md:block">
   <ul>
     <li><a href="school.html">Home</a></li>
     <li><a href="about.html">About Us</a></li>
@@ -57,6 +75,37 @@
     <li><a href="contact.html">Contact Us</a></li>
   </ul>
 </nav>
+<!-- Mobile Sidebar -->
+<div
+  id="mobileSidebar"
+  class="fixed top-0 left-[-280px] w-[260px] h-screen bg-white shadow-2xl z-[999] transition-all duration-300 md:hidden"
+>
+  <div class="p-5 border-b flex justify-between items-center">
+    <h2 class="text-xl font-bold text-blue-900">Quantum</h2>
+
+    <button onclick="toggleSidebar()" class="text-2xl">
+      ×
+    </button>
+  </div>
+
+  <div class="flex flex-col p-4 space-y-4">
+
+    <a href="school.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="curriculum.html">Curriculum</a>
+    <a href="admissions.html">Admissions</a>
+    <a href="fees.html">Fee Structure</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="rules.html">Rules & Regulations</a>
+    <a href="contact.html">Contact Us</a>
+
+  </div>
+</div>
+<div
+  id="overlay"
+  class="hidden fixed inset-0 bg-black/40 z-[998] md:hidden"
+  onclick="toggleSidebar()"
+></div>
 <section class="py-24 bg-gradient-to-b from-white to-blue-50">
 
   <div class="max-w-7xl mx-auto px-6">
@@ -203,3 +252,6 @@
             </footer>
         </main>
     </div>
+<script src="script.js"></script>
+
+</body></html>
