@@ -10,3 +10,21 @@ function toggleSidebar() {
     overlay.classList.remove("hidden");
   }
 }
+
+function openAdmin() {
+
+  const password = prompt("Enter Admin Password");
+
+  if (password === "Quantum@2026") {
+
+    localStorage.setItem("adminAuth", "true");
+
+    window.location.href = "admin.html";
+
+  } else {
+
+    alert("Wrong Password ❌");
+
+  }
+
+}

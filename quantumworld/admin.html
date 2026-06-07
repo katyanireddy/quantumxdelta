@@ -10,25 +10,43 @@
 </head>
 
 <body class="bg-gray-100 min-h-screen">
+<script>
+if (localStorage.getItem("adminAuth") !== "true") {
 
+  alert("Access Denied ❌");
+
+  window.location.href = "school.html";
+
+}
+</script>
 <div class="max-w-7xl mx-auto p-6">
 
-    <div class="flex justify-between items-center mb-8">
-        <h1 class="text-3xl font-bold">
+    <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
+        <h1 class="text-3xl md:text-5xl font-bold">
             Admissions Dashboard
         </h1>
 
-        <div class="flex gap-3">
-    <button onclick="loadAdmissions()" class="bg-blue-600 text-white px-4 py-2 rounded-xl">
-        Refresh
-    </button>
+        <div class="flex flex-wrap gap-3">
+    <button
+  onclick="loadAdmissions()"
+  class="bg-blue-600 text-white px-4 py-2 rounded-xl flex-1 sm:flex-none">
+  Refresh
+</button>
 
-    <button onclick="downloadCSV()" class="bg-green-600 text-white px-4 py-2 rounded-xl">
-        Download Excel
-    </button>
+<button
+  onclick="downloadCSV()"
+  class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 sm:flex-none">
+  Download Excel
+</button>
+
+<button
+  onclick="logoutAdmin()"
+  class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1 sm:flex-none">
+  Logout
+</button>
 </div>
     </div>
-<div class="grid grid-cols-3 gap-4 mb-6">
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
   <div class="bg-white p-5 rounded-2xl shadow">
     <h3 class="text-gray-500">Total Applications</h3>
     <p id="totalApps" class="text-4xl font-bold text-blue-600">0</p>
@@ -44,18 +62,18 @@
     <p id="topClass" class="text-4xl font-bold text-blue-600">-</p>
   </div>
 </div>
-<div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
 
   <!-- Search -->
   <input
     type="text"
     id="searchInput"
     placeholder="Search..."
-    class="px-4 py-3 border rounded-xl w-60"
+    class="px-4 py-3 border rounded-xl w-full md:w-60"
   />
 
   <!-- Right Side Filters -->
-  <div class="flex flex-wrap items-center gap-3">
+  <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
 
     <!-- Submission Date -->
     <input
@@ -89,7 +107,7 @@
     <!-- Sort -->
     <select
       id="sortOrder"
-      class="px-4 py-3 border rounded-xl"
+      class="px-4 py-3 border rounded-xl order-first md:order-none"
     >
       <option value="newest">Newest First</option>
       <option value="oldest">Oldest First</option>
@@ -101,10 +119,10 @@
 
 
 
-
+<div class="overflow-x-auto">
     <div class="bg-white rounded-2xl shadow overflow-x-auto">
 
-        <table class="w-full">
+        <table class="min-w-[1200px] w-full">
 
             <thead class="bg-blue-600 text-white">
                 <tr>
@@ -122,7 +140,7 @@
 
             <tbody id="admissionsTable">
                 <tr>
-                    <td colspan="8" class="p-6 text-center">
+                    <td colspan="9" class="p-6 text-center">
                         Loading...
                     </td>
                 </tr>
@@ -131,41 +149,44 @@
         </table>
 
     </div>
-
+</div>
 </div>
 <section class="py-16">
 
   <div class="max-w-7xl mx-auto px-6">
 
-    <div class="overflow-hidden bg-white rounded-[30px] shadow-xl border border-gray-100">
+    <div class="bg-white rounded-2xl shadow mt-10">
 
-      <div class="p-8 border-b">
-        
-        <h2 class="text-3xl font-bold">
-  Enquiries (<span id="totalEnquiries">0</span>)
-</h2>
-      </div>
+  <div class="p-8 border-b">
+    <h2 class="text-3xl font-bold">
+      Enquiries (<span id="totalEnquiries">0</span>)
+    </h2>
+  </div>
 
-      <table class="w-full">
+  <div class="overflow-x-auto">
 
-        <thead class="bg-green-600 text-white">
-          <tr>
-            <th class="p-4 text-left">Parent Name</th>
-            <th class="p-4 text-left">Email</th>
-            <th class="p-4 text-left">Phone</th>
-            <th class="p-4 text-left">Message</th>
-            <th class="p-4 text-left">Date</th>
-            <th class="p-4 text-left">Action</th>
-          </tr>
-        </thead>
+    <table class="min-w-[1000px] w-full">
 
-        <tbody id="enquiriesTable"></tbody>
+      <thead class="bg-green-600 text-white">
+        <tr>
+          <th class="p-4 text-left">Parent Name</th>
+          <th class="p-4 text-left">Email</th>
+          <th class="p-4 text-left">Phone</th>
+          <th class="p-4 text-left">Message</th>
+          <th class="p-4 text-left">Date</th>
+          <th class="p-4 text-left">Action</th>
+        </tr>
+      </thead>
 
-      </table>
+      <tbody id="enquiriesTable"></tbody>
 
-    </div>
+    </table>
 
   </div>
+
+</div>
+
+  
 
 </section>
 
@@ -490,7 +511,13 @@ document
   .getElementById("searchInput")
   .addEventListener("input", loadAdmissions);
 
-  
+function logoutAdmin() {
+
+  localStorage.removeItem("adminAuth");
+
+  window.location.href = "school.html";
+
+}
 </script>
 
 </body>
