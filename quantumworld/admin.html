@@ -255,17 +255,14 @@ data.forEach(row => {
   classCounts[cls] = (classCounts[cls] || 0) + 1;
 });
 
-let topClass = "-";
-let maxCount = 0;
+let maxCount = Math.max(...Object.values(classCounts));
 
-for (const cls in classCounts) {
-  if (classCounts[cls] > maxCount) {
-    maxCount = classCounts[cls];
-    topClass = cls;
-  }
-}
+const topClasses = Object.keys(classCounts)
+  .filter(cls => classCounts[cls] === maxCount);
 
-document.getElementById("topClass").textContent = topClass;
+document.getElementById("topClass").textContent =
+  topClasses.join(", ");
+  
   let filteredData = data;
 
   if (selectedDate) {
