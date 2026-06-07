@@ -15,26 +15,32 @@
         <!-- Header / Nav -->
         <nav id="main-nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-500 bg-white/80 backdrop-blur-md border-b border-gray-200/50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-                  <!-- Mobile Menu Button -->
- <button
-    id="menuBtn"
-    class="md:hidden text-xl text-gray-700 mr-2"
-    onclick="toggleSidebar()"
-  >
-    ☰
-  </button>
-                <!-- Logo -->
-                <div class="flex items-center gap-2 w-32 cursor-pointer" onclick="window.location.href='index.html'">
-                    <!-- Desktop -->
-<span class="hidden sm:block font-semibold tracking-tighter text-xl text-blue-900">
-  Quantum.
-</span>
+                  <!-- LEFT SIDE -->
+  <div class="flex items-center gap-2">
 
-<!-- Mobile -->
-<span class="font-bold text-2xl text-blue-900">
-    Q
-  </span>
-                </div>
+    <button
+      id="menuBtn"
+      class="md:hidden text-xl text-gray-700"
+      onclick="toggleSidebar()"
+    >
+      ☰
+    </button>
+
+    <div
+      class="cursor-pointer"
+      onclick="window.location.href='school.html'"
+    >
+      <!-- Desktop -->
+      <span class="hidden md:block font-semibold tracking-tighter text-xl text-blue-900">
+        Quantum.
+      </span>
+
+      <!-- Mobile -->
+      <span class="md:hidden font-semibold text-3xl text-blue-900">
+        Q
+      </span>
+    </div>
+    </div>
                 
                 <!-- Toggle -->
                 <div class="absolute left-1/2 -translate-x-1/2 flex items-center p-1 rounded-full bg-gray-100 border border-gray-200 shadow-inner transition-colors duration-500" id="nav-toggle-container">
@@ -55,7 +61,7 @@
                 <div class="flex items-center gap-3 w-32 justify-end">
                     
                     <button
-  onclick="window.location.href='schooladmission.html'"
+  onclick="window.location.href='admission-form.html'"
   class="hidden sm:block bg-blue-600 text-white hover:bg-blue-700 text-xs font-medium px-4 py-2 rounded-full transition-all shadow-sm"
 >
   Admission Open
@@ -71,7 +77,7 @@
     <li><a href="admissions.html">Admissions</a></li>
     <li><a href="fees.html">Fee Structure</a></li>
     <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="rules.html">Rules & Regulations</a></li>
+    <li><a href="rules.html" class="active-link">Rules & Regulations</a></li>
     <li><a href="contact.html">Contact Us</a></li>
   </ul>
 </nav>

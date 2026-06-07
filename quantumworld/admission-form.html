@@ -86,12 +86,14 @@
       <input
         type="text"
         placeholder="Student Name"
+        required
         class="w-full p-4 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
 
       <input
         type="text"
         placeholder="Parent Name"
+        required
         class="w-full p-4 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
 
@@ -102,14 +104,20 @@
       <input
         type="email"
         placeholder="Email Address"
+        required
         class="w-full p-4 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
 
       <input
-        type="tel"
-        placeholder="Phone Number"
-        class="w-full p-4 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-      >
+  type="tel"
+  id="phone"
+  placeholder="Phone Number"
+  required
+  pattern="[0-9]{10}"
+  maxlength="10"
+  minlength="10"
+  class="w-full p-4 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+/>
 
     </div>
 
@@ -135,15 +143,19 @@
       </select>
 
       <input
-        type="date"
-        class="w-full p-4 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-      >
-
+  type="date"
+  id="dob"
+  min="2010-01-01"
+  max="2024-12-31"
+  required
+  class="w-full p-4 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+/>
     </div>
 
     <textarea
       rows="5"
       placeholder="Address"
+      required
       class="w-full p-4 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
     ></textarea>
 
@@ -153,10 +165,12 @@
       class="w-full p-4 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
     ></textarea>
 
+    
     <button
       type="submit"
       class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-semibold transition duration-300 shadow-lg shadow-blue-600/20"
     >
+    
       Submit Application
     </button>
 
@@ -202,7 +216,7 @@
         📧 Email
       </h3>
 
-      <p class="text-blue-100 mt-2">
+      <p class="text-blue-100 mt-2 break-all">
         quantumworldschool@gmail.com
       </p>
     </div>
@@ -212,7 +226,7 @@
         🏫 Office Hours
       </h3>
 
-      <p class="text-blue-100 mt-2">
+      <p class="text-blue-100 mt-2 break-all">
         Mon - Sat | 8:00 AM - 4:00 PM
       </p>
     </div>
@@ -284,7 +298,7 @@
 
           <p>📧 quantumworldschool@gmail.com</p>
 
-          <p>📍 Bangalore, India</p>
+          <p>📍 Masaurhi, Patna</p>
 
         </div>
       </div>
@@ -340,6 +354,77 @@
   </div>
 
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+const supabaseUrl = "https://qwwjrfhirhfoqwxravvm.supabase.co";
+const supabaseKey = "sb_publishable_WAUBqL0FWHBrfvMb2pnCOA_B0No9ufJ";
+const supabaseClient = window.supabase.createClient(
+  supabaseUrl,
+  supabaseKey
+);
+
+const form = document.querySelector("form");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const studentName = form.querySelector('input[placeholder="Student Name"]').value;
+  const parentName = form.querySelector('input[placeholder="Parent Name"]').value;
+  const email = form.querySelector('input[type="email"]').value;
+  const phone = form.querySelector('input[type="tel"]').value;
+  if (!/^[0-9]{10}$/.test(phone)) {
+  alert("Phone number must be exactly 10 digits");
+  return;
+}
+  const className = form.querySelector('select').value;
+  const dob = form.querySelector('input[type="date"]').value;
+  const address = form.querySelectorAll('textarea')[0].value;
+
+  const { error } = await supabaseClient
+    .from("admissions")
+    .insert([
+      {
+        student_name: studentName,
+        parent_name: parentName,
+        email: email,
+        phone: phone,
+        class_name: className,
+        dob: dob,
+        address: address
+      }
+    ]);
+
+  if (error) {
+    alert("Submission Failed ❌");
+    console.log(error);
+  } else {
+    alert("Application Submitted Successfully ✅");
+    form.reset();
+  }
+});
+
+</script>
+
+<script>
+const dobInput = document.getElementById("dob");
+
+const today = new Date();
+
+const maxDate = new Date(
+  today.getFullYear() - 2,
+  today.getMonth(),
+  today.getDate()
+);
+
+const minDate = new Date(
+  today.getFullYear() - 16,
+  today.getMonth(),
+  today.getDate()
+);
+
+dobInput.max = maxDate.toISOString().split("T")[0];
+dobInput.min = minDate.toISOString().split("T")[0];
+</script>
 </body>
 </html>

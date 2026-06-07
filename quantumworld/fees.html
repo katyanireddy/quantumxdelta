@@ -15,26 +15,32 @@
         <!-- Header / Nav -->
         <nav id="main-nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-500 bg-white/80 backdrop-blur-md border-b border-gray-200/50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-                  <!-- Mobile Menu Button -->
- <button
-    id="menuBtn"
-    class="md:hidden text-xl text-gray-700 mr-2"
-    onclick="toggleSidebar()"
-  >
-    ☰
-  </button>
-                <!-- Logo -->
-                <div class="flex items-center gap-2 w-32 cursor-pointer" onclick="window.location.href='index.html'">
-                    <!-- Desktop -->
-<span class="hidden sm:block font-semibold tracking-tighter text-xl text-blue-900">
-  Quantum.
-</span>
+                  <!-- LEFT SIDE -->
+  <div class="flex items-center gap-2">
 
-<!-- Mobile -->
-<span class="font-bold text-2xl text-blue-900">
-    Q
-  </span>
-                </div>
+    <button
+      id="menuBtn"
+      class="md:hidden text-xl text-gray-700"
+      onclick="toggleSidebar()"
+    >
+      ☰
+    </button>
+
+    <div
+      class="cursor-pointer"
+      onclick="window.location.href='school.html'"
+    >
+      <!-- Desktop -->
+      <span class="hidden md:block font-semibold tracking-tighter text-xl text-blue-900">
+        Quantum.
+      </span>
+
+      <!-- Mobile -->
+      <span class="md:hidden font-semibold text-3xl text-blue-900">
+        Q
+      </span>
+    </div>
+    </div>
                 
                 <!-- Toggle -->
                 <div class="absolute left-1/2 -translate-x-1/2 flex items-center p-1 rounded-full bg-gray-100 border border-gray-200 shadow-inner transition-colors duration-500" id="nav-toggle-container">
@@ -55,7 +61,7 @@
                 <div class="flex items-center gap-3 w-32 justify-end">
                     
                     <button
-  onclick="window.location.href='schooladmission.html'"
+  onclick="window.location.href='admission-form.html'"
   class="hidden sm:block bg-blue-600 text-white hover:bg-blue-700 text-xs font-medium px-4 py-2 rounded-full transition-all shadow-sm"
 >
   Admission Open
@@ -69,7 +75,7 @@
     <li><a href="about.html">About Us</a></li>
     <li><a href="curriculum.html">Curriculum</a></li>
     <li><a href="admissions.html">Admissions</a></li>
-    <li><a href="fees.html">Fee Structure</a></li>
+    <li><a href="fees.html" class="active-link">Fee Structure</a></li>
     <li><a href="gallery.html">Gallery</a></li>
     <li><a href="rules.html">Rules & Regulations</a></li>
     <li><a href="contact.html">Contact Us</a></li>
@@ -133,36 +139,36 @@
 
         <thead class="bg-blue-600 text-white">
           <tr>
-            <th class="p-5 text-left">Class</th>
-            <th class="p-5 text-left">Admission Fee</th>
-            <th class="p-5 text-left">Annual Fee</th>
+            <th class="p-5 text-center">Class</th>
+            <th class="p-5 text-center">Admission Fee</th>
+            <th class="p-5 text-center">Annual Fee</th>
           </tr>
         </thead>
 
         <tbody>
 
           <tr class="border-b">
-            <td class="p-5">Nursery - UKG</td>
-            <td class="p-5">₹5,000</td>
-            <td class="p-5">₹25,000</td>
+            <td class="p-5 text-center">Nursery - UKG</td>
+            <td class="p-5 text-center">₹5,000</td>
+            <td class="p-5 text-center">₹25,000</td>
           </tr>
 
           <tr class="border-b">
-            <td class="p-5">Class I - V</td>
-            <td class="p-5">₹7,500</td>
-            <td class="p-5">₹35,000</td>
+            <td class="p-5 text-center">Class I - V</td>
+            <td class="p-5 text-center">₹7,500</td>
+            <td class="p-5 text-center">₹35,000</td>
           </tr>
 
           <tr class="border-b">
-            <td class="p-5">Class VI - VIII</td>
-            <td class="p-5">₹10,000</td>
-            <td class="p-5">₹42,000</td>
+            <td class="p-5 text-center">Class VI - VIII</td>
+            <td class="p-5 text-center">₹10,000</td>
+            <td class="p-5 text-center">₹42,000</td>
           </tr>
 
           <tr>
-            <td class="p-5">Class IX - X</td>
-            <td class="p-5">₹12,000</td>
-            <td class="p-5">₹50,000</td>
+            <td class="p-5 text-center">Class IX - X</td>
+            <td class="p-5 text-center">₹12,000</td>
+            <td class="p-5 text-center">₹50,000</td>
           </tr>
 
         </tbody>
@@ -219,13 +225,13 @@
   </div>
 
 </section>
-<section class="py-24">
+<section class="pt-10 pb-16">
 
   <div class="max-w-5xl mx-auto px-6">
 
     <div class="bg-blue-600 rounded-[40px] p-16 text-center">
 
-      <h2 class="text-5xl font-bold text-white">
+      <h2 class="text-4xl font-bold text-white">
         Have Questions?
       </h2>
 

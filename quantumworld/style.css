@@ -135,3 +135,8 @@
 .page-nav a:hover {
   color: #2563eb;
 }
+
+.active-link{
+  color:#2563eb !important;
+  font-weight:600;
+}
