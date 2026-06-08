@@ -94,46 +94,65 @@ function prevResult(){
  updateCard();
 
 }
-document
-.getElementById("enquiryForm")
-?.addEventListener("submit", submitEnquiry);
 
-async function submitEnquiry(event) {
+const supabaseUrl =
+"https://qwwjrfhirhfoqwxravvm.supabase.co";
 
-    event.preventDefault();
+const supabaseKey =
+"sb_publishable_WAUBqL0FWHBrfvMb2pnCOA_B0No9ufJ";
 
-    const name =
-        document.getElementById("parentName").value;
+const supabaseClient =
+window.supabase.createClient(
+  supabaseUrl,
+  supabaseKey
+);
 
-    const email =
-        document.getElementById("email").value;
+const enquiryForm =
+document.getElementById("enquiryForm");
 
-    const phone =
-        document.getElementById("phone").value;
+if (enquiryForm) {
 
-    const message =
-        document.getElementById("message").value;
+  enquiryForm.addEventListener(
+    "submit",
+    async function(e){
 
-    const { error } = await supabaseClient
-        .from("coaching_enquiries")
-        .insert([
-            {
-                name: name,
-                email: email,
-                phone: phone,
-                message: message
-            }
-        ]);
+      e.preventDefault();
 
-    if (error) {
+      const name =
+      document.getElementById("parentName").value;
+
+      const email =
+      document.getElementById("email").value;
+
+      const phone =
+      document.getElementById("phone").value;
+
+      const message =
+      document.getElementById("message").value;
+
+      const { error } =
+      await supabaseClient
+      .from("coaching_enquiries")
+      .insert([
+        {
+          name,
+          email,
+          phone,
+          message
+        }
+      ]);
+
+      if(error){
         console.error(error);
         alert("Enquiry Failed ❌");
         return;
+      }
+
+      alert("Enquiry Sent Successfully ✅");
+
+      enquiryForm.reset();
+
     }
+  );
 
-    alert("Enquiry Sent Successfully ✅");
-
-    document
-        .getElementById("enquiryForm")
-        .reset();
 }
