@@ -314,3 +314,396 @@ function closeModal() {
 
 }
 
+async function loadAdmissions() {
+
+  const table = document.getElementById("admissionsTable");
+
+  const selectedClass =
+  document.getElementById("classFilter")?.value || "";
+
+const selectedDate =
+  document.getElementById("dateFilter")?.value || "";
+
+const searchTerm =
+  document.getElementById("searchInput")?.value.toLowerCase() || "";
+
+  const sortOrder =
+  document.getElementById("sortOrder")?.value || "newest";
+  
+
+  let query = supabaseClient
+  .from("demo_bookings")
+  .select("*")
+  .order("created_at", {
+    ascending: sortOrder === "oldest"
+  });
+
+  if (selectedClass) {
+    query = query.eq("class_name", selectedClass);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+// Total Applications
+document.getElementById("totalApps").textContent = data.length;
+
+// Today's Applications
+const today = new Date().toISOString().split("T")[0];
+
+const todayCount = data.filter(row =>
+  row.created_at.startsWith(today)
+).length;
+
+document.getElementById("todayApps").textContent = todayCount;
+
+// Most Applied Class
+const classCounts = {};
+
+data.forEach(row => {
+  const cls = row.class_name || "Unknown";
+
+  classCounts[cls] = (classCounts[cls] || 0) + 1;
+});
+
+if (Object.keys(classCounts).length) {
+
+  let maxCount = Math.max(...Object.values(classCounts));
+
+  const topClasses = Object.keys(classCounts)
+    .filter(cls => classCounts[cls] === maxCount);
+
+  document.getElementById("topClass").textContent =
+    topClasses.join(", ");
+
+} else {
+
+  document.getElementById("topClass").textContent = "-";
+
+}
+
+  
+  let filteredData = data;
+
+  if (selectedDate) {
+    filteredData = data.filter(row => {
+      return row.created_at.startsWith(selectedDate);
+    });
+  }
+if (searchTerm) {
+  filteredData = filteredData.filter(row =>
+    (row.student_name || "").toLowerCase().includes(searchTerm) ||
+    (row.parent_name || "").toLowerCase().includes(searchTerm) ||
+    (row.phone || "").toLowerCase().includes(searchTerm) ||
+    (row.class_name || "").toLowerCase().includes(searchTerm) ||
+    (row.message || "").toLowerCase().includes(searchTerm)
+  );
+}
+  table.innerHTML = "";
+  if(filteredData.length === 0){
+  table.innerHTML = `
+  <tr>
+    <td colspan="7" class="p-6 text-center text-gray-400">
+      No Bookings Found
+    </td>
+  </tr>`;
+  return;
+}
+
+  filteredData.forEach(row => {
+
+    table.innerHTML += `
+<tr class="border-b border-white/10 hover:bg-white/5">
+
+<td class="p-4 whitespace-nowrap">
+  ${row.student_name || ""}
+</td>
+
+<td class="p-4 whitespace-nowrap">
+  ${row.parent_name || ""}
+</td>
+
+<td class="p-4 whitespace-nowrap">
+  ${row.phone || ""}
+</td>
+
+<td class="p-4 whitespace-nowrap">
+  ${row.class_name || ""}
+</td>
+
+<td class="p-4 break-words">
+  ${row.message || ""}
+</td>
+
+<td class="p-4 whitespace-nowrap">
+  ${new Date(row.created_at).toLocaleDateString()}
+</td>
+
+<td class="p-4 text-center">
+  <button
+    onclick="deleteBooking(${row.id})"
+    class="bg-red-500 px-3 py-1 rounded-lg"
+  >
+    Delete
+  </button>
+</td>
+
+</tr>
+
+`;
+  });
+
+}
+
+
+
+async function downloadCSV() {
+
+    const { data, error } = await supabaseClient
+        .from("demo_bookings")
+        .select("*")
+        .order("created_at", { ascending: false });
+        
+
+    if (error) {
+        alert("Error downloading data");
+        return;
+    }
+
+    const headers = [
+  "Student Name",
+  "Parent Name",
+  "Phone",
+  "Class",
+  "Message",
+  "Date"
+];
+
+    let csv = headers.join(",") + "\n";
+
+    data.forEach(row => {
+        csv += [
+  `"${row.student_name || ""}"`,
+  `"${row.parent_name || ""}"`,
+  `"${row.phone || ""}"`,
+  `"${row.class_name || ""}"`,
+  `"${row.message || ""}"`,
+  `"${row.created_at || ""}"`
+].join(",") + "\n";
+    });
+
+    const blob = new Blob([csv], {
+        type: "text/csv;charset=utf-8;"
+    });
+
+    const link = document.createElement("a");
+
+    link.href = URL.createObjectURL(blob);
+
+    link.download = "delta_bookings.csv";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+}
+async function deleteBooking(id) {
+
+  const confirmDelete = confirm(
+    "Are you sure you want to delete this booking?"
+  );
+
+  if (!confirmDelete) return;
+
+  const { error } = await supabaseClient
+    .from("demo_bookings")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    alert("Delete Failed ❌");
+    console.log(error);
+  } else {
+    alert("Deleted Successfully ✅");
+    loadAdmissions();
+  }
+}
+
+async function loadEnquiries() {
+    const table = document.getElementById("enquiriesTable");
+
+    if (!table) {
+        console.error("enquiriesTable not found");
+        return;
+    }
+
+    const { data, error } = await supabaseClient
+        .from("coaching_enquiries")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+document.getElementById("totalEnquiries").textContent =
+  data?.length || 0;
+
+
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    table.innerHTML = "";
+
+    data.forEach((row) => {
+        const tr = document.createElement("tr");
+
+        tr.className =
+"border-b border-white/10 hover:bg-violet-500/10 transition-all duration-300";
+
+        tr.innerHTML = `
+<td class="p-4">${row.name || ""}</td>
+
+<td class="p-4">${row.email || ""}</td>
+
+<td class="p-4">${row.phone || ""}</td>
+
+<td class="p-4">${row.message || ""}</td>
+
+<td class="p-4">
+${new Date(row.created_at).toLocaleDateString()}
+</td>
+
+<td class="p-4">
+<button
+class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm"
+onclick="deleteEnquiry(${row.id})"
+>
+Delete
+</button>
+</td>
+`;
+
+        const deleteBtn = tr.querySelector("button");
+
+        deleteBtn.addEventListener("click", () => {
+            deleteEnquiry(row.id);
+        });
+
+        table.appendChild(tr);
+    });
+}
+
+async function deleteEnquiry(id) {
+    const confirmDelete = confirm(
+        "Are you sure you want to delete this enquiry?"
+    );
+
+    if (!confirmDelete) return;
+
+    const { error } = await supabaseClient
+        .from("coaching_enquiries")
+        .delete()
+        .eq("id", id);
+
+    if (error) {
+        console.error(error);
+        alert("Delete Failed ❌");
+        return;
+    }
+
+    alert("Deleted Successfully ✅");
+
+    await loadEnquiries();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadEnquiries();
+});
+loadAdmissions();
+loadEnquiries();
+
+document
+  .getElementById("classFilter")
+  .addEventListener("change", loadAdmissions);
+
+document
+  .getElementById("dateFilter")
+  .addEventListener("change", loadAdmissions);
+
+document
+  .getElementById("sortOrder")
+  .addEventListener("change", loadAdmissions);
+
+  document
+  .getElementById("searchInput")
+  .addEventListener("input", loadAdmissions);
+
+function logoutAdmin() {
+
+  localStorage.removeItem("coachingAdminAuth");
+
+  window.location.href = "coaching.html";
+
+}
+
+function refreshDashboard() {
+
+  document.getElementById("searchInput").value = "";
+
+  document.getElementById("classFilter").value = "";
+
+  document.getElementById("dateFilter").value = "";
+
+  document.getElementById("sortOrder").value = "newest";
+
+  loadAdmissions();
+
+}
+async function submitBooking(event) {
+
+  event.preventDefault();
+
+  const studentName =
+    document.getElementById("studentName").value;
+
+  const parentName =
+    document.getElementById("parentName").value;
+
+  const phone =
+    document.getElementById("phone").value;
+
+  const className =
+    document.getElementById("className").value;
+
+  const message =
+    document.getElementById("message").value;
+
+  const { error } = await supabaseClient
+    .from("demo_bookings")
+    .insert([
+      {
+        student_name: studentName,
+        parent_name: parentName,
+        phone: phone,
+        class_name: className,
+        message: message
+      }
+    ]);
+
+  if (error) {
+    console.error(error);
+    alert("Booking Failed ❌");
+    return;
+  }
+
+  alert("Demo Booked Successfully ✅");
+
+  document.getElementById("bookingForm").reset();
+
+  closeModal();
+
+}
