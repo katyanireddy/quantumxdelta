@@ -328,17 +328,28 @@
         </main>
     </div>
 
-    <!-- MODALS & OVERLAYS -->
-    <div id="modal-container" class="fixed inset-0 z-[200] hidden flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
+    <div
+id="modal-container"
+class="hidden fixed inset-0 bg-black/70 z-[9999] flex items-center justify-center p-4"
+>
 
-        <div id="modal-content" class="relative w-full max-w-md bg-slate-900 rounded-2xl shadow-2xl border border-white/10 overflow-hidden transform scale-95 opacity-0 transition-all duration-300 dark">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white z-10">
-                <iconify-icon icon="solar:close-circle-linear" class="text-xl"></iconify-icon>
-            </button>
-            <div id="modal-body" class="p-8"></div>
-        </div>
-    </div>
+<div
+id="modal-content"
+class="relative w-full max-w-md bg-slate-900 rounded-2xl border border-white/10 p-6 scale-95 opacity-0 transition-all duration-300"
+>
+
+<button
+onclick="closeModal()"
+class="absolute right-4 top-4 text-white text-xl"
+>
+×
+</button>
+
+<div id="modal-body"></div>
+
+</div>
+
+</div>
 
     <!-- Floating WhatsApp -->
     <a href="https://wa.me/916201007413?text=Hi%20Delta%20Classes%2C%20I%20want%20to%20enquire%20about%20admissions" 
@@ -347,201 +358,7 @@
    💬
 </a>
 
-    <script>
-        const modalContainer = document.getElementById('modal-container');
-        const modalContent = document.getElementById('modal-content');
-        const modalBody = document.getElementById('modal-body');
-
-        const modalTemplates = {
-            login: `
-                <div class="text-center mb-6">
-                    <h3 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Welcome back</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Enter your details to access your portal.</p>
-                </div>
-                <form class="space-y-4" onsubmit="event.preventDefault();">
-                    <div>
-                        <label class="block text-[11px] font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
-                        <input type="email" class="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-violet-500 transition-all" placeholder="name@example.com">
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <label class="block text-[11px] font-medium text-gray-700 dark:text-gray-300">Password</label>
-                            <a href="#" class="text-[10px] text-blue-600 dark:text-violet-400 hover:underline">Forgot?</a>
-                        </div>
-                        <input type="password" class="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-violet-500 transition-all" placeholder="••••••••">
-                    </div>
-                    <button class="w-full bg-gray-900 dark:bg-white text-white dark:text-slate-900 text-sm font-medium py-2.5 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors mt-2">Sign In</button>
-                    <p class="text-center text-xs text-gray-500 dark:text-gray-400 mt-4">Don't have an account? <a href="#" onclick="openModal('signup')" class="text-gray-900 dark:text-white font-medium hover:underline">Sign up</a></p>
-                </form>
-            `,
-            signup: `
-                <div class="text-center mb-6">
-                    <h3 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Create Account</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Join our educational ecosystem.</p>
-                </div>
-                <form class="space-y-4" onsubmit="event.preventDefault();">
-                    <div class="grid grid-cols-2 gap-3 mb-2">
-                        <label class="custom-radio cursor-pointer relative">
-                            <input type="radio" name="role" class="peer sr-only" checked>
-                            <div class="rounded-lg border border-gray-200 dark:border-white/10 px-3 py-2 text-center text-gray-500 dark:text-gray-400 peer-checked:bg-gray-900 peer-checked:text-white dark:peer-checked:bg-white dark:peer-checked:text-slate-900 transition-all">
-                                <span class="text-xs font-medium">Student</span>
-                            </div>
-                        </label>
-                        <label class="custom-radio cursor-pointer relative">
-                            <input type="radio" name="role" class="peer sr-only">
-                            <div class="rounded-lg border border-gray-200 dark:border-white/10 px-3 py-2 text-center text-gray-500 dark:text-gray-400 peer-checked:bg-gray-900 peer-checked:text-white dark:peer-checked:bg-white dark:peer-checked:text-slate-900 transition-all">
-                                <span class="text-xs font-medium">Parent</span>
-                            </div>
-                        </label>
-                    </div>
-                    <div>
-                        <input type="text" class="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-violet-500 transition-all" placeholder="Full Name">
-                    </div>
-                    <div>
-                        <input type="email" class="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-violet-500 transition-all" placeholder="Email Address">
-                    </div>
-                    <div>
-                        <input type="password" class="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-violet-500 transition-all" placeholder="Create Password">
-                    </div>
-                    <button class="w-full bg-gray-900 dark:bg-white text-white dark:text-slate-900 text-sm font-medium py-2.5 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors mt-2">Create Account</button>
-                    <p class="text-center text-xs text-gray-500 dark:text-gray-400 mt-4">Already have an account? <a href="#" onclick="openModal('login')" class="text-gray-900 dark:text-white font-medium hover:underline">Log in</a></p>
-                </form>
-            `,
-            demo: `
-<form onsubmit="submitBooking(event)" class="space-y-4">
-
-<input
-id="studentName"
-type="text"
-placeholder="Student Name"
-class="w-full bg-slate-800 border border-white/10 rounded-lg px-4 py-3 text-white"
-required
->
-
-<input
-id="parentName"
-type="text"
-placeholder="Parent Name"
-class="w-full bg-slate-800 border border-white/10 rounded-lg px-4 py-3 text-white"
-required
->
-
-<div class="grid grid-cols-2 gap-3">
-
-<select
-id="className"
-class="bg-slate-800 border border-white/10 rounded-lg px-4 py-3 text-white"
-required
->
-<option value="">Select Class</option>
-<option>LKG</option>
-<option>UKG</option>
-<option>Class I</option>
-<option>Class II</option>
-<option>Class III</option>
-<option>Class IV</option>
-<option>Class V</option>
-<option>Class VI</option>
-<option>Class VII</option>
-<option>Class VIII</option>
-<option>Class IX</option>
-<option>Class X</option>
-<option>Class XI</option>
-<option>Class XII</option>
-</select>
-
-<input
-id="phone"
-type="tel"
-placeholder="WhatsApp Number"
-class="bg-slate-800 border border-white/10 rounded-lg px-4 py-3 text-white"
-required
->
-
-</div>
-
-<textarea
-id="message"
-placeholder="Message (Optional)"
-rows="3"
-class="w-full bg-slate-800 border border-white/10 rounded-lg px-4 py-3 text-white"
-></textarea>
-
-<button
-type="submit"
-class="w-full bg-gradient-to-r from-violet-500 via-fuchsia-500 to-orange-500 text-white py-3 rounded-xl font-semibold"
->
-Confirm Booking
-</button>
-
-</form>
-`
-        };
-
-        function openModal(type) {
-            modalBody.innerHTML = modalTemplates[type];
-            modalContainer.classList.remove('hidden');
-
-            if (type === 'demo') modalContent.className = "relative w-full max-w-md bg-slate-900 rounded-2xl shadow-2xl border border-white/10 overflow-hidden transform scale-95 opacity-0 transition-all duration-300 dark";
-            else modalContent.className = "relative w-full max-w-md bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-white/10 overflow-hidden transform scale-95 opacity-0 transition-all duration-300";
-
-            setTimeout(() => {
-                modalContent.classList.remove('scale-95', 'opacity-0');
-                modalContent.classList.add('scale-100', 'opacity-100');
-            }, 10);
-        }
-
-        function closeModal() {
-            modalContent.classList.remove('scale-100', 'opacity-100');
-            modalContent.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                modalContainer.classList.add('hidden');
-            }, 300);
-        }
-
-        async function submitBooking(event) {
-
-  event.preventDefault();
-
-  const studentName =
-    document.getElementById("studentName").value;
-
-  const parentName =
-    document.getElementById("parentName").value;
-
-  const phone =
-    document.getElementById("phone").value;
-
-  const className =
-    document.getElementById("className").value;
-
-  const message =
-    document.getElementById("message").value;
-
-  const { error } = await supabaseClient
-    .from("demo_bookings")
-    .insert([
-      {
-        student_name: studentName,
-        parent_name: parentName,
-        phone: phone,
-        class_name: className,
-        message: message
-      }
-    ]);
-
-  if (error) {
-    console.log(error);
-    alert("Booking Failed ❌");
-    return;
-  }
-
-  alert("Demo Booked Successfully ✅");
-
-  closeModal();
-}
-
-    </script>
+    
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script src="script.js"></script>

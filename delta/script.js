@@ -156,3 +156,161 @@ if (enquiryForm) {
   );
 
 }
+
+
+// ==========================
+// MODALS
+// ==========================
+
+const modalTemplates = {
+
+demo: `
+<form id="bookingForm" onsubmit="submitBooking(event)" class="space-y-4">
+
+<input
+id="studentName"
+type="text"
+placeholder="Student Name"
+class="w-full bg-slate-800 border border-white/10 rounded-lg px-4 py-3 text-white"
+required
+>
+
+<input
+id="parentName"
+type="text"
+placeholder="Parent Name"
+class="w-full bg-slate-800 border border-white/10 rounded-lg px-4 py-3 text-white"
+required
+>
+
+<div class="grid grid-cols-2 gap-3">
+
+<select
+id="className"
+class="bg-slate-800 border border-white/10 rounded-lg px-4 py-3 text-white"
+required
+>
+<option value="">Select Class</option>
+<option>LKG</option>
+<option>UKG</option>
+<option>Class I</option>
+<option>Class II</option>
+<option>Class III</option>
+<option>Class IV</option>
+<option>Class V</option>
+<option>Class VI</option>
+<option>Class VII</option>
+<option>Class VIII</option>
+<option>Class IX</option>
+<option>Class X</option>
+<option>Class XI</option>
+<option>Class XII</option>
+</select>
+
+<input
+id="phone"
+type="tel"
+placeholder="WhatsApp Number"
+class="bg-slate-800 border border-white/10 rounded-lg px-4 py-3 text-white"
+required
+>
+
+</div>
+
+<textarea
+id="message"
+rows="3"
+placeholder="Message (Optional)"
+class="w-full bg-slate-800 border border-white/10 rounded-lg px-4 py-3 text-white"
+></textarea>
+
+<button
+type="submit"
+class="w-full bg-gradient-to-r from-violet-500 via-fuchsia-500 to-orange-500 text-white py-3 rounded-xl font-semibold"
+>
+Confirm Booking
+</button>
+
+</form>
+`
+};
+
+// ==========================
+// OPEN MODAL
+// ==========================
+
+function openModal(type) {
+
+  const modalContainer =
+  document.getElementById("modal-container");
+
+  const modalContent =
+  document.getElementById("modal-content");
+
+  const modalBody =
+  document.getElementById("modal-body");
+
+  if (
+    !modalContainer ||
+    !modalContent ||
+    !modalBody
+  ) return;
+
+  modalBody.innerHTML =
+  modalTemplates[type];
+
+  modalContainer.classList.remove(
+    "hidden"
+  );
+
+  setTimeout(() => {
+
+    modalContent.classList.remove(
+      "scale-95",
+      "opacity-0"
+    );
+
+    modalContent.classList.add(
+      "scale-100",
+      "opacity-100"
+    );
+
+  }, 10);
+
+}
+
+// ==========================
+// CLOSE MODAL
+// ==========================
+
+function closeModal() {
+
+  const modalContainer =
+  document.getElementById("modal-container");
+
+  const modalContent =
+  document.getElementById("modal-content");
+
+  if (!modalContainer || !modalContent)
+    return;
+
+  modalContent.classList.remove(
+    "scale-100",
+    "opacity-100"
+  );
+
+  modalContent.classList.add(
+    "scale-95",
+    "opacity-0"
+  );
+
+  setTimeout(() => {
+
+    modalContainer.classList.add(
+      "hidden"
+    );
+
+  }, 300);
+
+}
+

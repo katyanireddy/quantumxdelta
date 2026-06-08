@@ -311,7 +311,7 @@ Experience the Delta teaching methodology firsthand.
 </p>
 
 <a
-href="contact.html"
+onclick="openModal('demo')"
 class="px-8 py-4 rounded-full bg-white text-black font-medium"
 >
 Book Free Demo
@@ -325,6 +325,28 @@ Book Free Demo
             </div>
         </main>
     </div>
+    <div
+id="modal-container"
+class="hidden fixed inset-0 bg-black/70 z-[9999] flex items-center justify-center p-4"
+>
+
+<div
+id="modal-content"
+class="relative w-full max-w-md bg-slate-900 rounded-2xl border border-white/10 p-6 scale-95 opacity-0 transition-all duration-300"
+>
+
+<button
+onclick="closeModal()"
+class="absolute right-4 top-4 text-white text-xl"
+>
+×
+</button>
+
+<div id="modal-body"></div>
+
+</div>
+
+</div>
      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="script.js"></script>
 
