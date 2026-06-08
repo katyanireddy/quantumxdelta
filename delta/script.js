@@ -211,6 +211,9 @@ required
 id="phone"
 type="tel"
 placeholder="WhatsApp Number"
+pattern="[0-9]{10}"
+maxlength="10"
+minlength="10"
 class="bg-slate-800 border border-white/10 rounded-lg px-4 py-3 text-white"
 required
 >
